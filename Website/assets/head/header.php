@@ -12,7 +12,7 @@
     <!-- Ixat CSS -->
     <link href="/assets/css/ixat.css" type="text/css" rel="stylesheet">
   </head>
-  <body>
+  <body class="bg-light">
 
 <?php
 include "nav.php";
