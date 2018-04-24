@@ -1,7 +1,3 @@
-<?php
-require_once "../classes/core.php";
-$CORE = new CORE();
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
