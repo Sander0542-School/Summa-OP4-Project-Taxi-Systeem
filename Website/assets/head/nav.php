@@ -14,8 +14,18 @@
         <li class="nav-item">
           <a class="nav-link<?php if (isset($pageTitle) && $pageTitle == "Contact") { echo " active"; } ?>" href="/contact">Contact</a>
         </li>
+<?php
+if ($CORE->is_logged_in()) {
+  echo '
         <li class="nav-item">
-          <a class="nav-link<?php if (isset($pageTitle) && $pageTitle == "Inloggen") { echo " active"; } ?>" href="/inloggen">Inloggen</a>
-        </li>
+          <a class="nav-link'; if (isset($pageTitle) && $pageTitle == "Uitloggen") { echo " active"; } echo '" href="/uitloggen">Uitloggen</a>
+        </li>';
+} else {
+  echo '
+        <li class="nav-item">
+          <a class="nav-link'; if (isset($pageTitle) && $pageTitle == "Inloggen") { echo " active"; } echo '" href="/inloggen">Inloggen</a>
+        </li>';
+}
+?>
       </ul>
     </nav>
