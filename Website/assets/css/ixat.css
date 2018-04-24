@@ -14,7 +14,7 @@ nav {
     width: 100%;
 }
 
-input[type=submit] {
+.home-container > a {
     position: absolute;
     top: 75%;
     left: 50%;
@@ -32,12 +32,12 @@ input[type=submit] {
 }
 .image-text{
     position: absolute;
-    top: 30%;
+    top: 20%;
     left: 49%;
     transform: translate(-50%, -50%);
     font-size: 32px;
 }
-.container{
+.home-container{
     position: relative;
     color: white;
     text-align: center;

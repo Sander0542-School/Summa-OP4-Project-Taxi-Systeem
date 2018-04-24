@@ -6,13 +6,14 @@ include_once "assets/head.php";
   <div class="row">
     <div class="col-3"></div>
     <div class="col-6">
-    <div class="container">
-      <img class="home-taxi" src="../image/Taxi.png" alt="Taxi">
-      <div class="image-text">
-        Ixat taxi<br/>
-        Het is beter dan lopen!</div>
-</div>
-      <input type="submit" value="Neem contact op">
+      <div class="home-container">
+        <img class="home-taxi" src="../image/Taxi.png" alt="Taxi">
+        <div class="image-text">
+          <b>Ixat taxi
+            <br/> Het is beter dan lopen!</b>
+        </div>
+      <a href="/contact" class="btn btn-dark">Neem contact op</a>
+      </div>
     </div>
   </div>
   <div class="row bg-white">
