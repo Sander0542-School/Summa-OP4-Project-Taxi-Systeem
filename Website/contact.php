@@ -1,5 +1,5 @@
 <?php
-$pageTitle = "Chauffeurs";
+$pageTitle = "Contact";
 include_once "assets/head.php";
 ?>
 
