@@ -13,6 +13,7 @@
     <link href="/assets/css/ixat.css" type="text/css" rel="stylesheet">
   </head>
   <body>
-    
-  </body>
-</html>
+
+<?php
+include "nav.php";
+?>
