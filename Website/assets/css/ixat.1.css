@@ -1,0 +1,22 @@
+/**
+ * Ixat CSS
+ *
+ *Created by Sander Jochems & Bram Swinkels
+ */
+
+nav {
+  margin: 15px 30px;
+}
+
+.col-40px {
+  width: 40px;
+}
+
+.container {
+  max-width: none;
+}
+
+.row.chauffeur .col {
+  padding-left: 0;
+  padding-right: 0;
+}

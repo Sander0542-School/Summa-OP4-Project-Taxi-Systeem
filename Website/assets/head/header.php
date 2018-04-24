@@ -11,6 +11,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <!-- Ixat CSS -->
     <link href="/assets/css/ixat.css" type="text/css" rel="stylesheet">
+    <link href="/assets/css/ixat.1.css" type="text/css" rel="stylesheet">
   </head>
   <body>
 
