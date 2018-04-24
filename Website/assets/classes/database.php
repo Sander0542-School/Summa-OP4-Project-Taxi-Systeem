@@ -2,7 +2,7 @@
 class Database
 {
   private $host = "localhost";
-  private $db_name = "online_toepen";
+  private $db_name = "ixat_taxis";
   private $username = "root";
   private $password = "";
   

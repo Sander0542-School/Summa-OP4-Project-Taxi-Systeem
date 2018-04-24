@@ -59,15 +59,15 @@ class CORE
 		$_SESSION['userSession'] = false;
   }
   
-  public function register($username, $email, $password, $firstname, $lastname) 
+  public function register($gebruikersnaam, $wachtwoord, $naam, $mobiel, $email) 
   {
 		try {
-			$stmt = $this->conn->prepare("INSERT INTO users (username, email, password, firstname, lastname, signup_ip, login_ip) VALUES (:username, :email, :password, :firstname, :lastname, :ip, :ip);");
-			$stmt->bindparam(":username",$username);
+			$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email, signup_ip, login_ip) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email, :ip, :ip);");
+			$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
+			$stmt->bindparam(":wachtwoord",$wachtwoord);
+			$stmt->bindparam(":naam",$naam);
+			$stmt->bindparam(":mobiel",$mobiel);
 			$stmt->bindparam(":email",$email);
-			$stmt->bindparam(":password",$password);
-			$stmt->bindparam(":firstname",$firstname);
-			$stmt->bindparam(":lastname",$lastname);
 			$stmt->bindparam(":ip",$_SERVER["REMOTE_ADDR"]);
 			$stmt->execute();
 
@@ -91,115 +91,4 @@ class CORE
 			return true;
 		}
 	}
-  
-  public function create_game() 
-  {
-		try {
-			$stmt = $this->conn->prepare("INSERT INTO games (creator) VALUES (:id);");
-			$stmt->bindparam(":id",$_SESSION['userSession']);
-			$stmt->execute();
-
-			return $this->lastID;
-		} catch (PDOException $ex) {
-			return false;
-		}
-  }
-  
-  public function leave_game() 
-  {
-		unset($_SESSION["currentGame"]);
-  }
-
-	public function game_exists($gameID)
-	{
-		$stmt = $this->conn->prepare("SELECT games.id, games.time_started, users.username as creator FROM games INNER JOIN users ON games.creator = users.id WHERE games.id=:gameID;");
-		$stmt->bindparam(":gameID",$gameID);
-		$stmt->execute();
-		$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		if ($stmt->rowCount() > 0) {
-			return $PS[0];
-		} else {
-			return false;
-		}
-	}
-
-	public function get_game_cards($gameID)
-	{
-		$stmt = $this->conn->prepare("SELECT * FROM cards WHERE gameID=:gameID;");
-		$stmt->bindparam(":gameID",$gameID);
-		$stmt->execute();
-		$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		if ($stmt->rowCount() > 0) {
-			return $PS[0];
-		} else {
-			return false;
-		}
-	}
-
-	public function join_game($gameID)
-	{
-		$stmt = $this->conn->prepare("SELECT id FROM games WHERE id=:gameID;");
-		$stmt->bindparam(":gameID",$gameID);
-		$stmt->execute();
-		$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		if ($stmt->rowCount() > 0) {
-			$_SESSION["currentGame"] = $PS[0]["id"];
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function numbers_to_card($number, $card) {
-		switch ($number) {
-			case 1:
-				$number = "jack";
-				break;
-			case 2:
-				$number = "queen";
-				break;
-			case 3:
-				$number = "king";
-				break;
-			case 4:
-				$number = "ace";
-				break;
-			case 5:
-				$number = "7";
-				break;
-			case 6:
-				$number = "8";
-				break;
-			case 7:
-				$number = "9";
-				break;
-			case 8:
-				$number = "10";
-				break;
-			default:
-				$number = "jack";
-				break;
-		}
-		switch ($card) {
-			case 1:
-				$type = "clubs";
-				break;
-			case 2:
-				$type = "diamonds";
-				break;
-			case 3:
-				$type = "hearts";
-				break;
-			case 4:
-				$type = "spades";
-				break;
-			default:
-				$type = "clubs";
-				break;
-		}
-		$cardName = $number."_of_".$type.".png";
-		return $cardName;
-	}
 }
-
-?>
