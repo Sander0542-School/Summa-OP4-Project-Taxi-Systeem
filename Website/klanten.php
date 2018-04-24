@@ -1,40 +1,75 @@
 <?php
 $pageTitle = "Klanten";
 include_once "assets/head.php";
-?>
 
+if ($CORE->is_logged_in()) {
 
-<form method="POST">
+} else {
+  echo '
+
+  <form method="POST">
     <div class="container">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-9">
-        <h1>Registreer je nu als klant!</h1><br/>
-        <div class="row chauffeur">
-          <div class="col">
-            <input type="text" class="form-control" placeholder="Naam" required><br/>
-            <input type="tel" class="form-control" placeholder="Mobiel Nummer" required><br/>
-            <input type="email" class="form-control" placeholder="E-mailadres" required><br/>
-          </div>
-          <div class="col-40px"></div>
-          <div class="col">
-            <input type="text" class="form-control" placeholder="Gebruikersnaam" required><br/>
-            <input type="password" class="form-control" placeholder="Wachtwoord" required><br/>
-            <input type="password" class="form-control" placeholder="Herhaal Wachtwoord" required><br/>
-            <input type="submit" value="Registreer!" class="btn btn-block btn-dark">
-          </div>
-          <div class="col-40px"></div>
-          <div class="col">
-            <img src="../image/kech.png" alt="kech">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+          <h1>Registreer je nu als klant!</h1>
+          <br/>
+          <div class="row chauffeur">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Naam" required>
+              <br/>
+              <input type="tel" class="form-control" placeholder="Mobiel Nummer" required>
+              <br/>
+              <input type="email" class="form-control" placeholder="E-mailadres" required>
+              <br/>
+            </div>
+            <div class="col-40px"></div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Gebruikersnaam" required>
+              <br/>
+              <input type="password" class="form-control" placeholder="Wachtwoord" required>
+              <br/>
+              <input type="password" class="form-control" placeholder="Herhaal Wachtwoord" required>
+              <br/>
+              <div class="klanten">
+              <input type="submit" value="Registreer!" class="btn btn-block btn-dark">
+</div>
+            </div>
+            <div class="col-40px"></div>
+            <div class="col">
+              <div class="image-klanten">
+                <img src="../image/kech.png" alt="kech">
+              </div>
+            </div>
           </div>
         </div>
+        <div class="col"></div>
       </div>
-      <div class="col"></div>
     </div>
-  </div>
-  </form>
-          
+  </form>';
+}
+?>
+  
+  <div class="container bg-white">
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+        <br/>
+          <h1>Voordelen van een klant worden</h1>
 
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+            natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+            eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, f ringilla vel, aliquet nec, vulputate
+            eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+            Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
+            porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+            Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
+            porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+            porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
+          </p>
+        </div>
+      </div>
+    </div>
 
 <?php
 include_once "assets/footer.php";

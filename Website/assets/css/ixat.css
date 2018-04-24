@@ -42,3 +42,12 @@ img{
     color: white;
     text-align: center;
 }
+
+
+.image-klanten{
+    width: 120%;
+}
+
+.klanten > input[type=submit]{
+    margin-bottom: 30%;
+}
