@@ -3,7 +3,42 @@
  *
  *Created by Sander Jochems & Bram Swinkels
  */
-
+body{
+    background-color: rgb(229, 233, 242);
+}
 nav {
   margin: 15px 30px;
+}
+
+.home-taxi{
+    width: 100%;
+}
+
+input[type=submit] {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    outline: 0;
+}
+.image-text{
+    position: absolute;
+    top: 30%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    font-size: 32px;
+}
+.container{
+    position: relative;
+    color: white;
+    text-align: center;
 }
