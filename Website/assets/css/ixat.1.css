@@ -4,31 +4,38 @@
  *Created by Sander Jochems & Bram Swinkels
  */
 
+/* Navbar margin  */
 nav {
   margin: 15px 30px;
 }
 
+/* Column with a 40 pixels width */
 .col-40px {
   width: 40px;
 }
 
+/* Column with a 20 pixels width */
 .col-20px {
   width: 20px;
 }
 
+/* No max width for a container */
 .container {
   max-width: none;
 }
 
+/* Remove paddings at the chauffeur row */
 .row.chauffeur .col {
   padding-left: 0;
   padding-right: 0;
 }
 
+/* Margin bottom 25 pixels */
 .margin-bottom-25px {
   margin-bottom: 25px;
 }
 
+/* Margin bottom 100 pixels */
 .margin-bottom-100px {
   margin-bottom: 100px;
 }
