@@ -6,14 +6,17 @@
 body{
     background-color: rgb(229, 233, 242);
 }
+
+/* Navbar margin */
 nav {
   margin: 15px 30px;
 }
-
+/* Image width */
 img{
     width: 100%;
 }
 
+/* Home page */
 .home-container > a {
     position: absolute;
     top: 75%;
@@ -48,6 +51,7 @@ img{
     width: 120%;
 }
 
-.klanten > input[type=submit]{
+/* Button  */
+input[type=submit]{
     margin-bottom: 30%;
 }
