@@ -16,7 +16,7 @@ include_once "assets/head.php";
         </div>
       </div>
     </div>
-    <div class="row bg-white">
+    <div id="footer" class="container bg-white">
 
       <div class="col-2"></div>
       <div class="col-8">

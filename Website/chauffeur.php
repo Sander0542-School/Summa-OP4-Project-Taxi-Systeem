@@ -74,7 +74,7 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
 }
 ?>
 
-    <div class="container bg-white">
+    <div id="footer" class="container bg-white">
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
