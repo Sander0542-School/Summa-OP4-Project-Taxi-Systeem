@@ -1,5 +1,5 @@
 var map;
-var marker;
+var marker = null;
 
 function openProfiel(page){
   if (page.value == 1){
@@ -26,7 +26,9 @@ function googleMaps() {
 }
  
 function placeMarker(position, map) {
-  //map.clearOverlays();
+  if (marker != null) {
+    marker.setMap(null);
+  }
   marker = new google.maps.Marker({
     position: position,
     map: map
