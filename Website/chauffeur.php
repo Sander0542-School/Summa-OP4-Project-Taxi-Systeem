@@ -3,7 +3,38 @@ $pageTitle = "Chauffeurs";
 include_once "assets/head.php";
 
 if ($CORE->is_logged_in()) {
-
+  echo '
+    <form method="POST">
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-9">
+            <h1>Uw gegevens</h1><br/>
+            <div class="row chauffeur">
+              <div class="col">
+                <input name="naam" type="text" class="form-control" placeholder="Naam" required><br/>
+                <input name="mobiel" type="tel" class="form-control" placeholder="Mobiel Nummer" required><br/>
+                <input name="email" type="email" class="form-control" placeholder="E-mailadres" required><br/>
+              </div>
+              <div class="col-40px"></div>
+              <div class="col">
+                <input name="automerk" type="text" class="form-control" placeholder="Merk Auto" required><br/>
+                <input name="autotype" type="text" class="form-control" placeholder="Type Auto" required><br/>
+                <input name="kenteken" type="text" class="form-control" placeholder="Kenteken" required><br/>
+                <input name="passagiers" type="number" class="form-control" placeholder="Aantal Passagiers" required><br/>
+                <input name="laadruimte" type="number" class="form-control" placeholder="Laadruimte (in liters)" required><br/>
+                <input name="schadevrij" type="number" class="form-control" placeholder="Schadevrije jaren" required><br/>
+              </div>
+              <div class="col-40px"></div>
+              <div class="col d-flex flex-column">
+                <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
+              </div>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </form>';
 } else {
   echo '
     <form method="POST">
