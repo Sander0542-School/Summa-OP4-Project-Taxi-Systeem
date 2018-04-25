@@ -3,10 +3,45 @@ $pageTitle = "Klanten";
 include_once "assets/head.php";
 
 if ($CORE->is_logged_in()) {
-
+  echo '
+  <form method="POST">
+    <div class="container">
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-9">
+          <h1>Wijzig uw gegevens!</h1>
+          <br/>
+          <div class="row chauffeur">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Naam" required>
+              <br/>
+              <input type="tel" class="form-control" placeholder="Mobiel Nummer" required>
+              <br/>
+              <input type="email" class="form-control" placeholder="E-mailadres" required>
+              <br/>
+            </div>
+            <div class="col-40px"></div>
+            <div class="col d-flex flex-column">
+              <input type="text" class="form-control" placeholder="Gebruikersnaam" required>
+              <br/>
+              <input type="password" class="form-control" placeholder="Wachtwoord" required>
+              <br/>
+              <input type="password" class="form-control" placeholder="Herhaal Wachtwoord" required>
+              <br/>
+              <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
+            </div>
+            <div class="col-20px"></div>
+            <div class="col-5">
+              <img src="/image/kech.png" class="margin-bottom-100px" alt="kech">
+            </div>
+          </div>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+  </form>';
 } else {
   echo '
-
   <form method="POST">
     <div class="container">
       <div class="row">
@@ -33,6 +68,7 @@ if ($CORE->is_logged_in()) {
               <br/>
               <input type="submit" value="Registreer!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
             </div>
+            <div class="col-20px"></div>
             <div class="col-5">
               <img src="/image/kech.png" class="margin-bottom-100px" alt="kech">
             </div>
