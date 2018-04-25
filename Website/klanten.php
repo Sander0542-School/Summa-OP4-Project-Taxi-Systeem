@@ -24,22 +24,17 @@ if ($CORE->is_logged_in()) {
               <br/>
             </div>
             <div class="col-40px"></div>
-            <div class="col">
+            <div class="col d-flex flex-column">
               <input type="text" class="form-control" placeholder="Gebruikersnaam" required>
               <br/>
               <input type="password" class="form-control" placeholder="Wachtwoord" required>
               <br/>
               <input type="password" class="form-control" placeholder="Herhaal Wachtwoord" required>
               <br/>
-              <div class="klanten">
-              <input type="submit" value="Registreer!" class="btn btn-block btn-dark">
-</div>
+              <input type="submit" value="Registreer!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
             </div>
-            <div class="col-40px"></div>
-            <div class="col">
-              <div class="image-klanten">
-                <img src="../image/kech.png" alt="kech">
-              </div>
+            <div class="col-5">
+              <img src="/image/kech.png" class="margin-bottom-100px" alt="kech">
             </div>
           </div>
         </div>
