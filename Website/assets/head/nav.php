@@ -18,7 +18,7 @@
 if ($CORE->is_logged_in()) {
   echo '
         <li class="nav-item">
-          <a class="nav-link'; if (isset($pageTitle) && $pageTitle == "Profiel") { echo " active"; } echo '" href="/profiel">Profiel</a>
+          <a class="nav-link'; if (isset($pageTitle) && ($pageTitle == "Klant Profiel" || $pageTitle == "Chauffeur Profiel")) { echo " active"; } echo '" href="/klant-profiel">Profiel</a>
         </li>';
 } else {
   echo '
