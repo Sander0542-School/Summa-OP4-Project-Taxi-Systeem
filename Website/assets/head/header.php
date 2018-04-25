@@ -12,6 +12,7 @@
     <!-- Ixat CSS -->
     <link href="/assets/css/ixat.css" type="text/css" rel="stylesheet">
     <link href="/assets/css/ixat.1.css" type="text/css" rel="stylesheet">
+    <script src="/assets/js/ixat.js"></script>
   </head>
   <body>
 
