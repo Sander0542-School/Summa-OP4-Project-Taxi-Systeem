@@ -23,6 +23,20 @@ function googleMaps() {
   map.addListener('click', function(e) {
     placeMarker(e.latLng, map);
   });
+function googleMapsChauffeurProfiel() {
+  var mapProp = {
+    center: new google.maps.LatLng(51.466448, 5.4964),
+    zoom: 17,
+    mapTypeControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+  };
+  map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+  navigator.geolocation.getCurrentPosition(function(position){
+    document.getElementById("user-lat").value = position.coords.latitude;
+    document.getElementById("user-lng").value = position.coords.longitude;
+  });
 }
  
 function placeMarker(position, map) {

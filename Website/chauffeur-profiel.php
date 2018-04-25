@@ -46,6 +46,7 @@ include_once "assets/head.php";
         <div class="col-40px"></div>
       </div>
     </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhUaFv5qwATzUG_DlgxbNCH1wXBa-B-PQ&callback=googleMapsChauffeurProfiel"></script>
 
 <?php
 include_once "assets/footer.php";
