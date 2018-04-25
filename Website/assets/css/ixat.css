@@ -55,3 +55,9 @@ img{
 input[type=submit]{
     margin-bottom: 30%;
 }
+
+/* textarea */
+    textarea{
+        resize: none;
+        height: 200px;
+    }
