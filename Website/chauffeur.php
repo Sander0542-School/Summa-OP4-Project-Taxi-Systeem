@@ -2,7 +2,7 @@
 $pageTitle = "Chauffeurs";
 include_once "assets/head.php";
 
-if ($CORE->is_logged_in()) {
+if ($CORE->is_logged_in() && U_DATA["chauffeurID"] != null) {
   echo '
     <form method="POST">
       <div class="container">
