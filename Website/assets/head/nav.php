@@ -18,7 +18,7 @@
 if ($CORE->is_logged_in()) {
   echo '
         <li class="nav-item">
-          <a class="nav-link'; if (isset($pageTitle) && $pageTitle == "Uitloggen") { echo " active"; } echo '" href="/uitloggen">Uitloggen</a>
+          <a class="nav-link'; if (isset($pageTitle) && $pageTitle == "Profiel") { echo " active"; } echo '" href="/profiel">Profiel</a>
         </li>';
 } else {
   echo '
