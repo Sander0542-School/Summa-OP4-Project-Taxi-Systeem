@@ -32,7 +32,7 @@ if ($CORE->is_logged_in()) {
             </div>
             <div class="col-20px"></div>
             <div class="col-5">
-              <img src="/image/kech.png" class="margin-bottom-100px" alt="kech">
+              <img src="/image/kech.png" class="margin-bottom-50px" alt="kech">
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ if ($CORE->is_logged_in()) {
             </div>
             <div class="col-20px"></div>
             <div class="col-5">
-              <img src="/image/kech.png" class="margin-bottom-100px" alt="kech">
+              <img src="/image/kech.png" class="margin-bottom-50px" alt="kech">
             </div>
           </div>
         </div>

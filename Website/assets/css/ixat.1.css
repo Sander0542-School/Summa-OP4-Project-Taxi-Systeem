@@ -35,9 +35,18 @@ nav {
   margin-bottom: 25px;
 }
 
+/* Margin bottom 50 pixels */
+.margin-bottom-50px {
+  margin-bottom: 50px;
+}
+
 /* Margin bottom 100 pixels */
 .margin-bottom-100px {
   margin-bottom: 100px;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
 }
 
 /* Footer */

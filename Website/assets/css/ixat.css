@@ -51,11 +51,6 @@ img{
     width: 120%;
 }
 
-/* Button  */
-input[type=submit]{
-    margin-bottom: 30%;
-}
-
 /* textarea */
     textarea{
         resize: none;

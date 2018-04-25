@@ -1,6 +1,6 @@
 <!-- Navbar -->
 
-    <nav>
+    <nav<?php if ($pageTitle != "Home") { echo ' class="margin-bottom-50px"'; } ?>>
       <ul class="nav nav-pills justify-content-end">
         <li class="nav-item">
           <a class="nav-link<?php if (isset($pageTitle) && $pageTitle == "Home") { echo " active"; } ?>" href="/home">Home</a>

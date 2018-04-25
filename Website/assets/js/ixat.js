@@ -1,3 +1,6 @@
+var map;
+var marker;
+
 function openProfiel(page){
   if (page.value == 1){
     window.location.href = "/klant-profiel";
@@ -7,10 +10,31 @@ function openProfiel(page){
   }
 }
 
-function myMap() {
+function googleMaps() {
   var mapProp = {
-    center: new google.maps.LatLng(51.508742, -0.120850),
-    zoom: 5,
+    center: new google.maps.LatLng(51.466448, 5.4964),
+    zoom: 17,
+    mapTypeControl: false,
+    streetViewControl: false,
+    rotateControl: false,
   };
-  var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+  map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+  map.addListener('click', function(e) {
+    placeMarker(e.latLng, map);
+  });
+}
+ 
+function placeMarker(position, map) {
+  //map.clearOverlays();
+  marker = new google.maps.Marker({
+    position: position,
+    map: map
+  });
+  map.panTo(position);
+}
+
+function mapsPanTo(lat, lng) {
+  var latLng = new google.maps.LatLng(lat, lng);
+  map.panTo(latLng);
 }
