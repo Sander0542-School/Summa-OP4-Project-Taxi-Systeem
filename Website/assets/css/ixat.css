@@ -3,21 +3,26 @@
  *
  *Created by Sander Jochems & Bram Swinkels
  */
-body{
+
+body {
     background-color: rgb(229, 233, 242);
 }
 
 /* Navbar margin */
+
 nav {
-  margin: 15px 30px;
+    margin: 15px 30px;
 }
+
 /* Image width */
-img{
+
+img {
     width: 100%;
 }
 
 /* Home page */
-.home-container > a {
+
+.home-container>a {
     position: absolute;
     top: 75%;
     left: 50%;
@@ -33,26 +38,28 @@ img{
     text-align: center;
     outline: 0;
 }
-.image-text{
+
+.image-text {
     position: absolute;
     top: 20%;
     left: 49%;
     transform: translate(-50%, -50%);
     font-size: 32px;
 }
-.home-container{
+
+.home-container {
     position: relative;
     color: white;
     text-align: center;
 }
 
-
-.image-klanten{
+.image-klanten {
     width: 120%;
 }
 
 /* textarea */
-    textarea{
-        resize: none;
-        height: 200px;
-    }
+
+textarea {
+    resize: none;
+    height: 200px;
+}
