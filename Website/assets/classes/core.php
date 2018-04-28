@@ -93,6 +93,22 @@ class CORE
 		}
 	}
 
+	public function getRideHistory() {
+		if ($this->is_logged_in()) {
+			$stmt = $this->conn->prepare("SELECT taxi_aanvraag.*, klant.naam FROM taxi_aanvraag INNER JOIN klant ON taxi_aanvraag.gebruikersnaam = klant.gebruikersnaam WHERE gebruikersnaam=:user AND password=:password;");
+			$stmt->bindparam(":user",$_SESSION['userSession']);
+			$stmt->execute();
+			$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			if ($stmt->rowCount() > 0) {
+				return $PS;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	public function showAlert($message, $color = "success") {
 		return '<div class="container"><div class="row margin-bottom-25px"><div class="col-2"></div><div class="col-8"><div class="alert alert-'.$color.' alert-dismissible fade show">'.$message.'</div></div></div></div>';
 	}
