@@ -35,6 +35,17 @@ if ($CORE->is_logged_in()) {
       </div>
     </form>';
 } else {
+  if (isset($_POST["name"]) && isset($_POST["mobile"]) && isset($_POST["email"]) && isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["passwordRepeat"])) {
+    $RESULT = $CORE->registerCustomer($_POST["username"],$_POST["password"],$_POST["passwordRepeat"],$_POST["name"],$_POST["mobile"], $_POST["email"]);
+    switch ($RESULT) {
+      case 0:
+        echo $CORE->showAlert("Account created. You can login now");
+        break;
+      case 1:
+        echo $CORE->showAlert("Could not created account", "warning");
+        break;
+    }
+  }
   echo '
     <form method="POST">
       <div class="container">

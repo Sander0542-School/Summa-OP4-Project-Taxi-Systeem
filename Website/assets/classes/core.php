@@ -59,21 +59,22 @@ class CORE
 		$_SESSION['userSession'] = false;
   }
   
-  public function register($gebruikersnaam, $wachtwoord, $naam, $mobiel, $email) 
+  public function registerCustomer($gebruikersnaam, $wachtwoord, $repeatPassword, $naam, $mobiel, $email) 
   {
 		try {
-			$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email, signup_ip, login_ip) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email, :ip, :ip);");
+			$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email);");
 			$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
 			$stmt->bindparam(":wachtwoord",$wachtwoord);
 			$stmt->bindparam(":naam",$naam);
 			$stmt->bindparam(":mobiel",$mobiel);
 			$stmt->bindparam(":email",$email);
-			$stmt->bindparam(":ip",$_SERVER["REMOTE_ADDR"]);
 			$stmt->execute();
 
-			return true;
+			return 0;
 		} catch (PDOException $ex) {
-			return false;
+			return 1;
+		}
+  }
 		}
   }
 
@@ -90,5 +91,9 @@ class CORE
       $_SESSION['userSession'] = $PS[0]["id"];
 			return true;
 		}
+	}
+
+	public function showAlert($message, $color = "success") {
+		return '<div class="container"><div class="row margin-bottom-25px"><div class="col-2"></div><div class="col-8"><div class="alert alert-'.$color.' alert-dismissible fade show">'.$message.'</div></div></div></div>';
 	}
 }
