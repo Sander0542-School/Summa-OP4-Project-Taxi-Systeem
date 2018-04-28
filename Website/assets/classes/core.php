@@ -75,6 +75,35 @@ class CORE
 			return 1;
 		}
   }
+  
+  public function registerDriver($gebruikersnaam, $wachtwoord, $naam, $mobiel, $email, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) 
+  {
+		try {
+			$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email);");
+			$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
+			$stmt->bindparam(":wachtwoord",$wachtwoord);
+			$stmt->bindparam(":naam",$naam);
+			$stmt->bindparam(":mobiel",$mobiel);
+			$stmt->bindparam(":email",$email);
+			$stmt->execute();
+
+			try {
+				$stmt = $this->conn->prepare("INSERT INTO chauffeur_aanvraag (gebruikersnaam, automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren) VALUES (:gebruikersnaam, :automerk, :autotype, :kenteken, :aantal_passagiers, :laadruimte, :schadevrije_jaren);");
+				$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
+				$stmt->bindparam(":automerk",$autoMerk);
+				$stmt->bindparam(":autotype",$autoType);
+				$stmt->bindparam(":kenteken",$kenteken);
+				$stmt->bindparam(":aantal_passagiers",$passagiers);
+				$stmt->bindparam(":laadruimte",$laadruimte);
+				$stmt->bindparam(":schadevrije_jaren",$schadevrij);
+				$stmt->execute();
+			} catch (PDOException $ex) {
+				return 2;
+			}
+
+			return 0;
+		} catch (PDOException $ex) {
+			return 1;
 		}
   }
 
