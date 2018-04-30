@@ -24,5 +24,26 @@ namespace IXAT
         {
             InitializeComponent();
         }
+
+        private void btnAanvragen_Click(object sender, RoutedEventArgs e)
+        {
+            AanvragenWindow aanvragen = new AanvragenWindow();
+            aanvragen.Show();
+            this.Close();
+        }
+
+        private void btnKoppelen_Click(object sender, RoutedEventArgs e)
+        {
+            KoppelWindow koppel = new KoppelWindow();
+            koppel.Show();
+            this.Close();
+        }
+
+        private void btnOntkoppelen_Click(object sender, RoutedEventArgs e)
+        {
+            OntkoppelWindow ontkoppel = new OntkoppelWindow();
+            ontkoppel.Show();
+            this.Close();
+        }
     }
 }
