@@ -21,7 +21,7 @@ namespace IXAT
                 _conn.Open();
 
                 MySqlCommand sqlCommand = _conn.CreateCommand();
-                sqlCommand.CommandText = "SELECT * FROM logins WHERE username = @username AND password = @password";
+                sqlCommand.CommandText = "SELECT * FROM klant WHERE gebruikersnaam = @username AND wachtwoord = @password";
                 sqlCommand.Parameters.AddWithValue("@username", sUsername);
                 sqlCommand.Parameters.AddWithValue("@password", sPassword);
 
