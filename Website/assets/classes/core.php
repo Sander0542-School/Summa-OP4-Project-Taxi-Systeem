@@ -33,8 +33,8 @@ class CORE
 	{
 		if(isset($_SESSION['userSession']))
 		{
-			$stmt = $this->conn->prepare("SELECT * FROM users WHERE id=:id");
-			$stmt->execute(array(":id"=>$_SESSION['userSession']));
+			$stmt = $this->conn->prepare("SELECT * FROM klant WHERE gebruikersnaam=:user");
+			$stmt->execute(array(":user"=>$_SESSION['userSession']));
 			$userRow = $stmt->fetch(PDO::FETCH_ASSOC);
 			if ($stmt->rowCount() == 1) {
 				return true;
