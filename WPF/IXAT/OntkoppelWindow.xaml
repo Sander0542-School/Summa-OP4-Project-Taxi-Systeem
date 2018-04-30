@@ -6,6 +6,14 @@
         xmlns:local="clr-namespace:IXAT"
         mc:Ignorable="d"
         Title="OntkoppelWindow" Height="800" Width="1366" ResizeMode="CanMinimize" WindowState="Maximized">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Background="#e5e9f2">
         
     </Grid>

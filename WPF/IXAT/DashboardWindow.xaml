@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:IXAT"
         mc:Ignorable="d"
         Title="Dashboard" Height="350" Width="350" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Background="#e5e9f2">
     </Grid>
 </Window>
