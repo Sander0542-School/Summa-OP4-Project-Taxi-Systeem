@@ -22,6 +22,23 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="ButtonSuccess" TargetType="Button" BasedOn="{StaticResource Button}">
+        <Setter Property="Background" Value="#28a745"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#218838"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ButtonDanger" TargetType="Button" BasedOn="{StaticResource Button}">
+        <Setter Property="Background" Value="#dc3545"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#c82333"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="TextBoxDark" TargetType="TextBox">
         <Setter Property="Foreground" Value="#343a40"/>
         <Setter Property="FontSize" Value="16"/>
