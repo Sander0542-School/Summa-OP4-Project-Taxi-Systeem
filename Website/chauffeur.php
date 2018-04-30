@@ -12,9 +12,42 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
             <h1>Uw gegevens</h1><br/>
             <div class="row chauffeur">
               <div class="col">
-                <input name="naam" type="text" class="form-control" placeholder="Naam" required><br/>
-                <input name="mobiel" type="tel" class="form-control" placeholder="Mobiel Nummer" required><br/>
-                <input name="email" type="email" class="form-control" placeholder="E-mailadres" required><br/>
+                <input name="naam" type="text" class="form-control" value="'.$U_DATA["naam"].'" required><br/>
+                <input name="mobiel" type="tel" class="form-control" value="'.$U_DATA["mobiel"].'" required><br/>
+                <input name="email" type="email" class="form-control" value="'.$U_DATA["email"].'" required><br/>
+              </div>
+              <div class="col-40px"></div>
+              <div class="col">
+                <input name="automerk" type="text" class="form-control" value="'.$UC_DATA["automerk"].'" required><br/>
+                <input name="autotype" type="text" class="form-control" value="'.$UC_DATA["autotype"].'" required><br/>
+                <input name="kenteken" type="text" class="form-control" value="'.$UC_DATA["kenteken"].'" required><br/>
+                <input name="passagiers" type="number" class="form-control" value="'.$UC_DATA["aantal_passagiers"].'" required><br/>
+                <input name="laadruimte" type="number" class="form-control" value="'.$UC_DATA["laadruimte"].'" required><br/>
+                <input name="schadevrij" type="number" class="form-control" value="'.$UC_DATA["schadevrije_jaren"].'" required><br/>
+              </div>
+              <div class="col-40px"></div>
+              <div class="col d-flex flex-column">
+                <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
+              </div>
+            </div>
+          </div>
+          <div class="col"></div>
+        </div>
+      </div>
+    </form>';
+} elseif ($CORE->is_logged_in()) {
+  echo '
+    <form method="POST">
+      <div class="container">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-9">
+            <h1>Meld je nu aan!</h1><br/>
+            <div class="row chauffeur">
+              <div class="col">
+                <input name="naam" type="text" class="form-control" value="'.$U_DATA["naam"].'" required disabled><br/>
+                <input name="mobiel" type="tel" class="form-control" value="'.$U_DATA["mobiel"].'" required disabled><br/>
+                <input name="email" type="email" class="form-control" value="E-'.$U_DATA["email"].'" required disabled><br/>
               </div>
               <div class="col-40px"></div>
               <div class="col">
@@ -27,7 +60,10 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
               </div>
               <div class="col-40px"></div>
               <div class="col d-flex flex-column">
-                <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
+                <input name="gebruikersnaam" type="text" class="form-control" value="'.$U_DATA["gebruikersnaam"].'" required disabled><br/>
+                <input name="wachtwoord" type="password" class="form-control" value="Wachtwoord" required disabled><br/>
+                <input name="wachtwoord2" type="password" class="form-control" value="Wachtwoord" required disabled><br/>
+                <input type="submit" value="Registreer!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
               </div>
             </div>
           </div>
