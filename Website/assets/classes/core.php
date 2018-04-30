@@ -15,7 +15,21 @@ class CORE
 		$database = new Database();
 		$db = $database->dbConnection();
 		$this->conn = $db;
-  }
+	}
+	
+	public function load_user_data() {
+		if ($this->is_logged_in()) {
+			$stmt = $this->runQuery("SELECT * FROM klant WHERE gebruikersnaam=:gebruikersnaam");
+			$stmt->execute(array(":gebruikersnaam"=>$_SESSION['userSession']));
+			return $stmt->fetch(PDO::FETCH_ASSOC);
+		}
+	}
+
+	public function load_chauffeur_data($chauffeurID) {
+		$stmt = $this->runQuery("SELECT * FROM chauffeur WHERE id=:cID");
+		$stmt->execute(array(":cID"=>$chauffeurID));
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 
 	public function runQuery($sql)
 	{
