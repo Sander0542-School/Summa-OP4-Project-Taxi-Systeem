@@ -23,5 +23,12 @@ namespace IXAT
         {
             InitializeComponent();
         }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardWindow dashboard = new DashboardWindow();
+            dashboard.Show();
+            this.Close();
+        }
     }
 }
