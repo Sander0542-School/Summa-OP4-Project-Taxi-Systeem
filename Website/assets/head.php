@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "classes/core.php";
 $CORE = new CORE();
 if ($CORE->is_logged_in())  {
