@@ -22,6 +22,8 @@ namespace IXAT
         public KoppelWindow()
         {
             InitializeComponent();
+
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
     }
 }

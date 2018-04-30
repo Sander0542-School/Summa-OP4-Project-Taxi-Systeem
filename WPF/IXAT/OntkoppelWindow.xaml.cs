@@ -22,6 +22,8 @@ namespace IXAT
         public OntkoppelWindow()
         {
             InitializeComponent();
+
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
     }
 }

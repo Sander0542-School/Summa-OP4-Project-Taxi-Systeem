@@ -22,6 +22,8 @@ namespace IXAT
         public AanvragenWindow()
         {
             InitializeComponent();
+
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
     }
