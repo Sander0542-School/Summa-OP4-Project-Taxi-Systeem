@@ -10,7 +10,7 @@ namespace IXAT
 {
     class Database
     {
-        private MySqlConnection _conn = new MySqlConnection("Server=localhost;Database=ixat;Uid=root;Pwd=");
+        private MySqlConnection _conn = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=");
 
         public bool Login(string sUsername, string sPassword)
         {
