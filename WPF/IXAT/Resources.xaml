@@ -39,6 +39,34 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="ButtonReload" TargetType="Button">
+        <Setter Property="Background" Value="#dc3545"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="Content" Value="!"/>
+        <Setter Property="Margin" Value="0,0,15,0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Width" Value="36"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="18" Background="{TemplateBinding Background}" BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#c82333"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="TextBoxDark" TargetType="TextBox">
         <Setter Property="Foreground" Value="#343a40"/>
         <Setter Property="FontSize" Value="16"/>
