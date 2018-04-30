@@ -14,5 +14,38 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid Background="#e5e9f2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
     </Grid>
 </Window>
