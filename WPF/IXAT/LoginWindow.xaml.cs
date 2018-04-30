@@ -19,6 +19,8 @@ namespace IXAT
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private Database database = new Database();
+
         public LoginWindow()
         {
             InitializeComponent();
@@ -26,9 +28,19 @@ namespace IXAT
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            DashboardWindow dashboard = new DashboardWindow();
-            dashboard.Show();
-            this.Close();
+            if (tbUsername.Text.Length > 0 && pbPassword.Password.Length > 0)
+            {
+                if (database.Login(tbUsername.Text, pbPassword.Password))
+                {
+                    DashboardWindow dashboard = new DashboardWindow();
+                    dashboard.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Gebruikersnaam en wachtwoord komen niet overeen");
+                }
+            }
         }
     }
 }
