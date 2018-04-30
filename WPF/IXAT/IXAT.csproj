@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DashboardWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -69,6 +70,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DashboardWindow.xaml.cs">
+      <DependentUpon>DashboardWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="KoppelWindow.xaml">
