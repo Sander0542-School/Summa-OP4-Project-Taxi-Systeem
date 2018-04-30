@@ -47,5 +47,28 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Text="Chauffeursaanvragen" FontSize="26" Style="{StaticResource TextBlockDark}"/>
+        <StackPanel Grid.Column="5" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnReload" Style="{StaticResource ButtonReload}" Visibility="Hidden"/>
+            <Button x:Name="btnBack" Content="Terug" VerticalAlignment="Center" Width="150" Style="{StaticResource Button}" Click="btnBack_Click" />
+        </StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="Selecteer een aanvraag" FontSize="22" Style="{StaticResource TextBlockDark}"/>
+        <ComboBox x:Name="cbRequests" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" Style="{StaticResource ComboBox}"/>
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="Gegevens" FontSize="20" Style="{StaticResource TextBlockDark}"/>
+
+        <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="1" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="6" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="12" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="14" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Grid.Column="3" Grid.Row="16" Style="{StaticResource TextBoxDark}"/>
+
+        <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Style="{StaticResource ButtonSuccess}" Content="Accepteren"/>
+        <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Style="{StaticResource ButtonDanger}" Content="Weigeren"/>
+
+        <Image Grid.Column="5" Grid.Row="3" Grid.RowSpan="16" VerticalAlignment="Top" Source="Images/chauffeur.png"/>
     </Grid>
 </Window>
