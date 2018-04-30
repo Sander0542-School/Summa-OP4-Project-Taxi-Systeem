@@ -56,3 +56,9 @@ nav {
   bottom: 0;
   position: relative;
 }
+
+/* Disabled Input */
+.form-control:disabled, .form-control[readonly] {
+  background-color: #fff;
+  cursor: not-allowed;
+}
