@@ -10,9 +10,8 @@ include_once "assets/head.php";
           <div class="row">
             <div class="col">
               <select class="custom-select" onchange="openProfiel(this)">
-                <option selected>Maak een keuze</option>
                 <option value="1">Klant</option>
-                <option value="2">Chauffeur</option>
+                <option value="2" selected>Chauffeur</option>
               </select>
             </div>
             <div class="col">
