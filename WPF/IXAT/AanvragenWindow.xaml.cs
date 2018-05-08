@@ -32,5 +32,11 @@ namespace IXAT
             dashboard.Show();
             this.Close();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            DashboardWindow dashboard = new DashboardWindow();
+            dashboard.Show();
+        }
     }
 }

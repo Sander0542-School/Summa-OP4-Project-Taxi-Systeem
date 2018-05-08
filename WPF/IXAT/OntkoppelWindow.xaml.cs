@@ -25,5 +25,11 @@ namespace IXAT
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            DashboardWindow dashboard = new DashboardWindow();
+            dashboard.Show();
+        }
     }
 }
