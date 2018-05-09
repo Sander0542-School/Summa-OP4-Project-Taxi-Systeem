@@ -63,3 +63,10 @@ textarea {
     resize: none;
     height: 200px;
 }
+
+/* Chauffeur-profiel */
+
+p > a {
+    color: #41aff4;
+    font-size: 20px;
+}

@@ -3,6 +3,7 @@ $pageTitle = "Klanten";
 include_once "assets/head.php";
 
 if ($CORE->is_logged_in()) {
+  if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["username"]) && isset($_POST["password"]))
   echo '
     <form method="POST">
       <div class="container">
@@ -20,8 +21,7 @@ if ($CORE->is_logged_in()) {
               <div class="col-40px"></div>
               <div class="col d-flex flex-column">
                 <input name="username" type="text" class="form-control" placeholder="Gebruikersnaam" required><br/>
-                <input name="password" type="password" class="form-control" placeholder="Wachtwoord" required><br/>
-                <input name="passwordRepeat" type="password" class="form-control" placeholder="Herhaal Wachtwoord" required><br/>
+                <input name="password" type="password" class="form-control" placeholder="Huidig Wachtwoord" required><br/>
                 <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
               </div>
               <div class="col-20px"></div>
@@ -39,13 +39,15 @@ if ($CORE->is_logged_in()) {
     $RESULT = $CORE->registerCustomer($_POST["username"],$_POST["password"],$_POST["passwordRepeat"],$_POST["name"],$_POST["mobile"], $_POST["email"]);
     switch ($RESULT) {
       case 0:
-        echo $CORE->showAlert("Account created. You can login now");
+        echo $CORE->showAlert("Account aangemaakt. U kunt nu inloggen");
         break;
       case 1:
-        echo $CORE->showAlert("Could not created account", "warning");
+        echo $CORE->showAlert("Kon account niet aanmmaken", "warning");
         break;
     }
   }
+}
+
   echo '
     <form method="POST">
       <div class="container">
@@ -63,8 +65,8 @@ if ($CORE->is_logged_in()) {
               <div class="col-40px"></div>
               <div class="col d-flex flex-column">
                 <input name="username" type="text" class="form-control" placeholder="Gebruikersnaam" required><br/>
-                <input name="password" type="password" class="form-control" placeholder="Wachtwoord" required><br/>
-                <input name="passwordRepeat" type="password" class="form-control" placeholder="Herhaal Wachtwoord" required><br/>
+                <input name="password" type="password" class="form-control" placeholder="Wachtwoord"><br/>
+                <input name="passwordRepeat" type="password" class="form-control" placeholder="Herhaal Wachtwoord"><br/>
                 <input type="submit" value="Registreer!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
               </div>
               <div class="col-20px"></div>
@@ -77,7 +79,7 @@ if ($CORE->is_logged_in()) {
         </div>
       </div>
     </form>';
-}
+
 ?>
 
     <div id="footer" class="container bg-white">
