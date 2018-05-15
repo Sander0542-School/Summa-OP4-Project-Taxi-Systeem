@@ -2,11 +2,10 @@ var map;
 var marker = null;
 var klantProfielChoosed = false;
 
-function openProfiel(page){
-  if (page.value == 1){
+function openProfiel(page) {
+  if (page.value == 1) {
     window.location.href = "/klant-profiel";
-  }
-  else if (page.value == 2){
+  } else if (page.value == 2) {
     window.location.href = "/chauffeur-profiel";
   }
 }
@@ -21,13 +20,13 @@ function googleMapsKlantProfiel() {
   };
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-  map.addListener('click', function(e) {
-    placeMarker(e.latLng, map);
+  map.addListener('click', function (e) {
+    placeMarker(e.latLng, map, true);
   });
 
-  navigator.geolocation.getCurrentPosition(function(position){
+  navigator.geolocation.getCurrentPosition(function (position) {
     if (!klantProfielChoosed) {
-      placeMarker(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), map);
+      placeMarker(new google.maps.LatLng(position.coords.latitude, position.coords.longitude), map, true);
     }
   });
 }
@@ -42,13 +41,13 @@ function googleMapsChauffeurProfiel() {
   };
   map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-  navigator.geolocation.getCurrentPosition(function(position){
+  navigator.geolocation.getCurrentPosition(function (position) {
     document.getElementById("user-lat").value = position.coords.latitude;
     document.getElementById("user-lng").value = position.coords.longitude;
   });
 }
- 
-function placeMarker(position, map) {
+
+function placeMarker(position, map, updateForm) {
   if (marker != null) {
     marker.setMap(null);
   }
@@ -58,16 +57,30 @@ function placeMarker(position, map) {
   });
   map.panTo(position);
 
-  document.getElementById("user-lat").value = position.lat();
-  document.getElementById("user-lng").value = position.lng();
+  if (updateForm) {
+    document.getElementById("user-lat").value = position.lat();
+    document.getElementById("user-lng").value = position.lng();
+  
+    document.getElementById("submit-button").value = "Verzoek indienen!";
+    document.getElementById("submit-button").disabled = false;
 
-  document.getElementById("submit-button").value = "Verzoek indienen!";
-  document.getElementById("submit-button").disabled = false;
-
-  klantProfielChoosed = true;
+    klantProfielChoosed = true;
+  }
 }
 
 function mapsPanTo(lat, lng) {
   var latLng = new google.maps.LatLng(lat, lng);
   map.panTo(latLng);
+}
+
+function loadData(aanvraagID, passagiers, laadruimte, mobile, date, time, email, latitude, longitude) {
+  document.getElementById("aanvraagID").value = aanvraagID;
+  document.getElementById("passagiers").value = passagiers;
+  document.getElementById("laadruimte").value = laadruimte;
+  document.getElementById("mobiel").value = mobile;
+  document.getElementById("datum").value = date;
+  document.getElementById("tijd").value = time;
+  document.getElementById("email").value = email;
+  mapsPanTo(latitude, longitude);
+  placeMarker(new google.maps.LatLng(latitude, longitude), map, false);
 }

@@ -21,7 +21,7 @@ if (isset($_POST["type"])) {
           echo $CORE->showAlert("Uw wachtwoorden komen niet overeen", "warning");
           break;
         case 4:
-          echo $CORE->showAlert("Aanvraag voor chauffeur ingediend");
+          echo $CORE->showAlert("Aanvraag voor chauffeur ingediend, u kunt nu inloggen");
           break;
       }
     }

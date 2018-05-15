@@ -215,9 +215,24 @@ class CORE
 		}
 	}
 
+	public function requestRide($passagiers, $laadruimte, $latitude, $longitude) {
+		try {
+			$stmt = $this->conn->prepare("INSERT INTO taxi_aanvraag (klantID, minimale_laadruimte, passagiers, latitude, longitude) VALUES (:klantID, :laadruimte, :aantal_passagiers, :latitude, :longitude);");
+			$stmt->bindparam(":aantal_passagiers",$passagiers);
+			$stmt->bindparam(":laadruimte",$laadruimte);
+			$stmt->bindparam(":klantID",$_SESSION["userSession"]);
+			$stmt->bindparam(":latitude",$latitude);
+			$stmt->bindparam(":longitude",$longitude);
+			$stmt->execute();
+			return 0;
+		} catch (PDOException $ex) {
+			return 1;
+		}
+	}
+
 	public function getRideHistory() {
 		if ($this->is_logged_in()) {
-			$stmt = $this->conn->prepare("SELECT taxi_aanvraag.*, klant.naam FROM taxi_aanvraag INNER JOIN klant ON taxi_aanvraag.gebruikersnaam = klant.gebruikersnaam WHERE id=:klantID AND password=:password;");
+			$stmt = $this->conn->prepare("SELECT CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, latitude, longitude FROM taxi_aanvraag WHERE klantID=:klantID AND klaar='1';");
 			$stmt->bindparam(":klantID",$_SESSION['userSession']);
 			$stmt->execute();
 			$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -231,12 +246,35 @@ class CORE
 		}
 	}
 
-	public function showAlert($message, $color = "success") {
-		return '<div class="container"><div class="row margin-bottom-25px"><div class="col-2"></div><div class="col-8"><div class="alert alert-'.$color.' alert-dismissible fade show">'.$message.'</div></div></div></div>';
+	public function accepteerRit($aanvraagID, $chauffeurID) {
+		try {
+			$stmt = $this->conn->prepare("UPDATE taxi_aanvraag SET chauffeurID=:chauffeurID, geaccepteerd='1' WHERE aanvraagID=:aanvraagID;");
+			$stmt->bindparam(":chauffeurID",$chauffeurID);
+			$stmt->bindparam(":aanvraagID",$aanvraagID);
+			$stmt->execute();
+
+			return 0;
+		} catch (PDOException $ex) {
+			return 1;
+		}
 	}
 
-	public function getOpenRequests(){
-		$stmt = $this->conn->prepare("SELECT naam, minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, DATE(datum_tijd) as datum, email, mobiel, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID;");
+	public function weigerRit($aanvraagID, $chauffeurID) {
+		try {
+			$stmt = $this->conn->prepare("UPDATE taxi_aanvraag SET chauffeurID= CASE WHEN chauffeurID = :chauffeurID THEN null ELSE chauffeurID END, geaccepteerd='0' WHERE aanvraagID=:aanvraagID;");
+			$stmt->bindparam(":chauffeurID",$chauffeurID);
+			$stmt->bindparam(":aanvraagID",$aanvraagID);
+			$stmt->execute();
+
+			return 0;
+		} catch (PDOException $ex) {
+			return 1;
+		}
+	}
+
+	public function getOpenRequests($chauffeurID) {
+		$stmt = $this->conn->prepare("SELECT aanvraagID, naam, minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE (taxi_aanvraag.chauffeurID is null OR taxi_aanvraag.chauffeurID = :chauffeurID) AND klaar = '0';");
+		$stmt->bindparam(":chauffeurID",$chauffeurID);
 		$stmt->execute();
 		$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		if ($stmt->rowCount() > 0) {
@@ -245,7 +283,9 @@ class CORE
 			return false;
 		}
 	}
-	
- 
+
+	public function showAlert($message, $color = "success") {
+		return '<div class="container"><div class="row margin-bottom-25px"><div class="col-2"></div><div class="col-8"><div class="alert alert-'.$color.' alert-dismissible fade show">'.$message.'</div></div></div></div>';
+	}
 
 }

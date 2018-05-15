@@ -70,3 +70,7 @@ p > a {
     color: #41aff4;
     font-size: 20px;
 }
+
+li[onclick] {
+    cursor: pointer;
+}
