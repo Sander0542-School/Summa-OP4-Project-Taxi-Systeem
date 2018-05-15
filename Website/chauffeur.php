@@ -2,7 +2,7 @@
 $pageTitle = "Chauffeurs";
 include_once "assets/head.php";
 
-if (isset($_POST["type"]) && $CORE->is_logged_in()) {
+if (isset($_POST["type"])) {
   $type = $_POST["type"];
   if ($type == "newCustomer") {
     if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"]) && isset($_POST["gebruikersnaam"]) && isset($_POST["wachtwoord"]) && isset($_POST["wachtwoord2"])) {
@@ -25,7 +25,7 @@ if (isset($_POST["type"]) && $CORE->is_logged_in()) {
           break;
       }
     }
-  } elseif ($type == "newDriver") {
+  } elseif ($type == "newDriver" && $CORE->is_logged_in()) {
     if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"])) {
       $result = $CORE->requestDriver($U_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"]);
       switch ($result) {
@@ -37,7 +37,7 @@ if (isset($_POST["type"]) && $CORE->is_logged_in()) {
           break;
       }
     }
-  } elseif ($type == "updateDriver") {
+  } elseif ($type == "updateDriver" && $CORE->is_logged_in()) {
     if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"])) {
       $result = $CORE->updateChauffeur($UC_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"]);
       switch ($result) {

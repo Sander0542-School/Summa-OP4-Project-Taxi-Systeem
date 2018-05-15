@@ -90,22 +90,20 @@ class CORE
 		}
   }
   
-  public function registerDriver($gebruikersnaam, $wachtwoord, $wachtwoord2, $naam, $mobiel, $email, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij, $klantID = 0) 
+  public function registerDriver($gebruikersnaam, $wachtwoord, $wachtwoord2, $naam, $mobiel, $email, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) 
   {
 		try {
-			if (!$this->is_logged_in()) {
-				if ($wachtwoord == $wachtwoord2) {
-					$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email);");
-					$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
-					$stmt->bindparam(":wachtwoord",$wachtwoord);
-					$stmt->bindparam(":naam",$naam);
-					$stmt->bindparam(":mobiel",$mobiel);
-					$stmt->bindparam(":email",$email);
-					$stmt->execute();
-					$klantID = $this->lastID();
-				} else {
-					return 3;
-				}
+			if ($wachtwoord == $wachtwoord2) {
+				$stmt = $this->conn->prepare("INSERT INTO klant (gebruikersnaam, wachtwoord, naam, mobiel, email) VALUES (:gebruikersnaam, :wachtwoord, :naam, :mobiel, :email);");
+				$stmt->bindparam(":gebruikersnaam",$gebruikersnaam);
+				$stmt->bindparam(":wachtwoord",$wachtwoord);
+				$stmt->bindparam(":naam",$naam);
+				$stmt->bindparam(":mobiel",$mobiel);
+				$stmt->bindparam(":email",$email);
+				$stmt->execute();
+				$klantID = $this->lastID();
+			} else {
+				return 3;
 			}
 
 			try {
@@ -119,16 +117,13 @@ class CORE
 					$stmt->bindparam(":laadruimte",$laadruimte);
 					$stmt->bindparam(":schadevrije_jaren",$schadevrij);
 					$stmt->execute();
-					if ($gebruikersnaam == null) {
-						return 4;
-					}
+					return 4;
 				} else {
 					return 2;
 				}
 			} catch (PDOException $ex) {
 				return 2;
 			}
-
 			return 0;
 		} catch (PDOException $ex) {
 			return 1;
@@ -251,4 +246,6 @@ class CORE
 		}
 	}
 	
+ 
+
 }
