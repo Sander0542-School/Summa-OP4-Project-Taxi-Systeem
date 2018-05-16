@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace IXAT
 {
     class Database
     {
-        private MySqlConnection _conn = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=");
+        private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=");
 
         public bool Login(string sUsername, string sPassword)
         {
@@ -18,10 +19,10 @@ namespace IXAT
 
             try
             {
-                _conn.Open();
+                connection.Open();
 
-                MySqlCommand sqlCommand = _conn.CreateCommand();
-                sqlCommand.CommandText = "SELECT * FROM klant WHERE gebruikersnaam = @username AND wachtwoord = @password";
+                MySqlCommand sqlCommand = connection.CreateCommand();
+                sqlCommand.CommandText = "SELECT * FROM klant WHERE gebruikersnaam = @username AND wachtwoord = @password AND applicatie = '1'";
                 sqlCommand.Parameters.AddWithValue("@username", sUsername);
                 sqlCommand.Parameters.AddWithValue("@password", sPassword);
 
@@ -35,10 +36,37 @@ namespace IXAT
             }
             finally
             {
-                _conn.Close();
+                connection.Close();
             }
 
             return bResult;
+        }
+
+        public DataTable getChauffeurAanvragen()
+        {
+            DataTable dataTable = null;
+            try
+            {
+                connection.Open();
+
+                MySqlCommand sqlCommand = connection.CreateCommand();
+                sqlCommand.CommandText = "SELECT klantID as id, klant.naam FROM chauffeur_aanvraag INNER JOIN klant ON chauffeur_aanvraag.klantID = klant.id";
+
+                MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+                dataTable = new DataTable();
+                dataTable.Load(dataReader);
+            }
+            catch (Exception)
+            {
+                //Do nothing
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return dataTable;
         }
     }
 }
