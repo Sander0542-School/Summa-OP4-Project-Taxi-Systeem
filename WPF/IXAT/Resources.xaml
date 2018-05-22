@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:IXAT">
     
-    <Style TargetType="Button">
+    <Style x:Key="ButtonBase" TargetType="ButtonBase">
         <Setter Property="Background" Value="#343a40"/>
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="14"/>
@@ -22,7 +22,9 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ButtonSuccess" TargetType="Button" BasedOn="{StaticResource Button}">
+    <Style TargetType="Button" BasedOn="{StaticResource ButtonBase}"/>
+
+    <Style x:Key="ButtonSuccess" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
         <Setter Property="Background" Value="#28a745"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -31,7 +33,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ButtonDanger" TargetType="Button" BasedOn="{StaticResource Button}">
+    <Style x:Key="ButtonDanger" TargetType="Button" BasedOn="{StaticResource ButtonBase}">
         <Setter Property="Background" Value="#dc3545"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

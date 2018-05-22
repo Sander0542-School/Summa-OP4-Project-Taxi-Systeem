@@ -66,8 +66,8 @@
         <TextBox Grid.Column="3" Grid.Row="14"/>
         <TextBox Grid.Column="3" Grid.Row="16"/>
 
-        <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Content="Accepteren"/>
-        <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Content="Weigeren"/>
+        <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Style="{StaticResource ButtonSuccess}" Content="Accepteren"/>
+        <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Style="{StaticResource ButtonDanger}" Content="Weigeren"/>
 
         <Image Grid.Column="5" Grid.Row="3" Grid.RowSpan="16" VerticalAlignment="Top" Source="Images/chauffeur.png"/>
     </Grid>
