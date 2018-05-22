@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 08 mei 2018 om 09:26
+-- Gegenereerd op: 22 mei 2018 om 15:26
 -- Serverversie: 10.1.26-MariaDB
 -- PHP-versie: 7.1.8
 
@@ -49,7 +49,8 @@ CREATE TABLE `chauffeur` (
 --
 
 INSERT INTO `chauffeur` (`id`, `automerk`, `autotype`, `kenteken`, `aantal_passagiers`, `laadruimte`, `schadevrije_jaren`, `latitude`, `longitude`, `vrij`) VALUES
-(1, 'Bugatti', 'Veryon', 'SPEED', 1, 150, 3, '0.00000000', '0.00000000', 1);
+(1, 'Bugatti', 'Veryon', 'SANDER', 1, 80, 5, '0.00000000', '0.00000000', 1),
+(2, 'Mercedes', 'CLA 45', 'Mercedes', 3, 100, 4, '0.00000000', '0.00000000', 1);
 
 -- --------------------------------------------------------
 
@@ -59,15 +60,13 @@ INSERT INTO `chauffeur` (`id`, `automerk`, `autotype`, `kenteken`, `aantal_passa
 
 DROP TABLE IF EXISTS `chauffeur_aanvraag`;
 CREATE TABLE `chauffeur_aanvraag` (
-  `gebruikersnaam` varchar(100) NOT NULL,
+  `klantID` int(11) NOT NULL,
   `automerk` varchar(50) NOT NULL,
   `autotype` varchar(50) NOT NULL,
   `kenteken` varchar(10) NOT NULL,
   `aantal_passagiers` int(2) NOT NULL DEFAULT '1',
   `laadruimte` int(11) NOT NULL DEFAULT '0',
-  `schadevrije_jaren` int(2) NOT NULL DEFAULT '0',
-  `latitude` decimal(11,8) NOT NULL,
-  `longitude` decimal(11,8) NOT NULL
+  `schadevrije_jaren` int(2) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -82,13 +81,6 @@ CREATE TABLE `chauffeur_rijbewijs` (
   `rijbewijsID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Gegevens worden geëxporteerd voor tabel `chauffeur_rijbewijs`
---
-
-INSERT INTO `chauffeur_rijbewijs` (`chauffeurID`, `rijbewijsID`) VALUES
-(1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -97,20 +89,23 @@ INSERT INTO `chauffeur_rijbewijs` (`chauffeurID`, `rijbewijsID`) VALUES
 
 DROP TABLE IF EXISTS `klant`;
 CREATE TABLE `klant` (
+  `id` int(11) NOT NULL,
   `gebruikersnaam` varchar(100) NOT NULL,
   `wachtwoord` varchar(128) NOT NULL,
   `naam` varchar(250) NOT NULL,
   `mobiel` varchar(20) NOT NULL,
   `email` varchar(250) NOT NULL,
-  `chauffeurID` int(11) DEFAULT NULL
+  `chauffeurID` int(11) DEFAULT NULL,
+  `applicatie` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `klant`
 --
 
-INSERT INTO `klant` (`gebruikersnaam`, `wachtwoord`, `naam`, `mobiel`, `email`, `chauffeurID`) VALUES
-('Sander0542', '123', 'Sander Jochems', '0634633053', 'sanderjochems@hotmail.nl', 1);
+INSERT INTO `klant` (`id`, `gebruikersnaam`, `wachtwoord`, `naam`, `mobiel`, `email`, `chauffeurID`, `applicatie`) VALUES
+(1, 'Sander', '123', 'Sander Jochems', '0634633053', 'sanderjochems@hotmail.nl', 1, 1),
+(2, 'Brsawm', '123', 'Bram Swinkels', '0652698002', 'bramswinkels@live.nl', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -124,13 +119,6 @@ CREATE TABLE `rijbewijs` (
   `naam` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Gegevens worden geëxporteerd voor tabel `rijbewijs`
---
-
-INSERT INTO `rijbewijs` (`id`, `naam`) VALUES
-(1, 'Sander Jochems');
-
 -- --------------------------------------------------------
 
 --
@@ -139,20 +127,24 @@ INSERT INTO `rijbewijs` (`id`, `naam`) VALUES
 
 DROP TABLE IF EXISTS `taxi_aanvraag`;
 CREATE TABLE `taxi_aanvraag` (
-  `gebruikersnaam` varchar(100) NOT NULL,
+  `aanvraagID` int(11) NOT NULL,
+  `klantID` int(11) NOT NULL,
+  `chauffeurID` int(11) DEFAULT NULL,
   `datum_tijd` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `minimale_laadruimte` int(11) NOT NULL,
   `passagiers` int(1) NOT NULL,
   `latitude` decimal(11,8) NOT NULL,
-  `longitude` decimal(11,8) NOT NULL
+  `longitude` decimal(11,8) NOT NULL,
+  `geaccepteerd` int(1) NOT NULL DEFAULT '0',
+  `klaar` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `taxi_aanvraag`
 --
 
-INSERT INTO `taxi_aanvraag` (`gebruikersnaam`, `datum_tijd`, `minimale_laadruimte`, `passagiers`, `latitude`, `longitude`) VALUES
-('Sander0542', '2018-04-30 15:57:47', 120, 1, '0.00000000', '0.00000000');
+INSERT INTO `taxi_aanvraag` (`aanvraagID`, `klantID`, `chauffeurID`, `datum_tijd`, `minimale_laadruimte`, `passagiers`, `latitude`, `longitude`, `geaccepteerd`, `klaar`) VALUES
+(1, 1, NULL, '2018-05-22 10:33:43', 40, 5, '51.46630440', '5.49602350', 0, 0);
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -168,7 +160,7 @@ ALTER TABLE `chauffeur`
 -- Indexen voor tabel `chauffeur_aanvraag`
 --
 ALTER TABLE `chauffeur_aanvraag`
-  ADD PRIMARY KEY (`gebruikersnaam`);
+  ADD PRIMARY KEY (`klantID`);
 
 --
 -- Indexen voor tabel `chauffeur_rijbewijs`
@@ -181,7 +173,8 @@ ALTER TABLE `chauffeur_rijbewijs`
 -- Indexen voor tabel `klant`
 --
 ALTER TABLE `klant`
-  ADD PRIMARY KEY (`gebruikersnaam`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQUE` (`gebruikersnaam`),
   ADD KEY `foreign_klanten_chauffeur` (`chauffeurID`);
 
 --
@@ -194,7 +187,9 @@ ALTER TABLE `rijbewijs`
 -- Indexen voor tabel `taxi_aanvraag`
 --
 ALTER TABLE `taxi_aanvraag`
-  ADD PRIMARY KEY (`gebruikersnaam`);
+  ADD PRIMARY KEY (`aanvraagID`),
+  ADD KEY `foreign_taxi_aanvraag_klanten` (`klantID`),
+  ADD KEY `foreign_taxi_aanvraag_chauffeur` (`chauffeurID`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
@@ -204,12 +199,22 @@ ALTER TABLE `taxi_aanvraag`
 -- AUTO_INCREMENT voor een tabel `chauffeur`
 --
 ALTER TABLE `chauffeur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT voor een tabel `klant`
+--
+ALTER TABLE `klant`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT voor een tabel `rijbewijs`
 --
 ALTER TABLE `rijbewijs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT voor een tabel `taxi_aanvraag`
+--
+ALTER TABLE `taxi_aanvraag`
+  MODIFY `aanvraagID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Beperkingen voor geëxporteerde tabellen
 --
@@ -218,7 +223,7 @@ ALTER TABLE `rijbewijs`
 -- Beperkingen voor tabel `chauffeur_aanvraag`
 --
 ALTER TABLE `chauffeur_aanvraag`
-  ADD CONSTRAINT `foreign_chuaffeur_aanvraag_klanten` FOREIGN KEY (`gebruikersnaam`) REFERENCES `klant` (`gebruikersnaam`);
+  ADD CONSTRAINT `foreign_chuaffeur_aanvraag_klanten` FOREIGN KEY (`klantID`) REFERENCES `klant` (`id`);
 
 --
 -- Beperkingen voor tabel `chauffeur_rijbewijs`
@@ -237,7 +242,8 @@ ALTER TABLE `klant`
 -- Beperkingen voor tabel `taxi_aanvraag`
 --
 ALTER TABLE `taxi_aanvraag`
-  ADD CONSTRAINT `foreign_taxi_aanvraag_klanten` FOREIGN KEY (`gebruikersnaam`) REFERENCES `klant` (`gebruikersnaam`);
+  ADD CONSTRAINT `foreign_taxi_aanvraag_chauffeur` FOREIGN KEY (`chauffeurID`) REFERENCES `chauffeur` (`id`),
+  ADD CONSTRAINT `foreign_taxi_aanvraag_klanten` FOREIGN KEY (`klantID`) REFERENCES `klant` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
