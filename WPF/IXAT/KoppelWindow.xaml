@@ -49,16 +49,16 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Text="Chauffeurs koppelen" FontSize="26"/>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Selecteer een aanvraag" FontSize="22"/>
-        <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id"/>
-        <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16"/>
+        <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbRequests_SelectionChanged"/>
+        <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16" SelectionChanged="cbChauffeurNaam_SelectionChanged"/>
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Selecteer een chauffeur" FontSize="22"/>
         <Button Grid.Column="3" Grid.Row="20" Content="Koppel chauffeur"/>
         <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22"/>
-        <TextBox Name="aantalPassagiers" Grid.Column="1" Grid.Row="8"/>
-        <TextBox Name="laadruimte" Grid.Column="1" Grid.Row="10"/>
-        <TextBox Name="mobielNummer" Grid.Column="1" Grid.Row="12"/>
-        <TextBox Name="datum" Grid.Column="3" Grid.Row="8"/>
-        <TextBox Name="tijd" Grid.Column="3" Grid.Row="10"/>
-        <TextBox Name="email" Grid.Column="3" Grid.Row="12"/>
+        <TextBox Name="tbAantalPassagiers" Grid.Column="1" Grid.Row="8" IsReadOnly="True"/>
+        <TextBox Name="tbLaadruimte" Grid.Column="1" Grid.Row="10" IsReadOnly="True"/>
+        <TextBox Name="tbMobielNummer" Grid.Column="1" Grid.Row="12" IsReadOnly="True"/>
+        <TextBox Name="tbDatum" Grid.Column="3" Grid.Row="8" IsReadOnly="True"/>
+        <TextBox Name="tbTijd" Grid.Column="3" Grid.Row="10" IsReadOnly="True"/>
+        <TextBox Name="tbEmail" Grid.Column="3" Grid.Row="12" IsReadOnly="True"/>
     </Grid>
 </Window>

@@ -55,11 +55,11 @@
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Gekoppelde chauffeur" FontSize="22"/>
         <Button Grid.Column="3" Grid.Row="20" Content="Ontkoppel chauffeur"/>
         <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22"/>
-        <TextBox Name="aantalPassagiers" Grid.Column="1" Grid.Row="8"/>
-        <TextBox Name="laadruimte" Grid.Column="1" Grid.Row="10"/>
-        <TextBox Name="mobielNummer" Grid.Column="1" Grid.Row="12"/>
-        <TextBox Name="datum" Grid.Column="3" Grid.Row="8"/>
-        <TextBox Name="tijd" Grid.Column="3" Grid.Row="10"/>
-        <TextBox Name="email" Grid.Column="3" Grid.Row="12"/>
+        <TextBox Name="tbAantalPassagiers" Grid.Column="1" Grid.Row="8"/>
+        <TextBox Name="tbLaadruimte" Grid.Column="1" Grid.Row="10"/>
+        <TextBox Name="tbMobielNummer" Grid.Column="1" Grid.Row="12"/>
+        <TextBox Name="tbDatum" Grid.Column="3" Grid.Row="8"/>
+        <TextBox Name="tbTijd" Grid.Column="3" Grid.Row="10"/>
+        <TextBox Name="tbEmail" Grid.Column="3" Grid.Row="12"/>
     </Grid>
 </Window>
