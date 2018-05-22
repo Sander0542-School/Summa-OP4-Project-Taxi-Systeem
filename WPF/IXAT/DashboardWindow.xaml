@@ -32,8 +32,8 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" Foreground="#343a40" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Kies een Dashboard"/>
-        <Button x:Name="btnAanvragen" Grid.Row="3" Grid.Column="1" Style="{StaticResource Button}" Content="Chauffeursaanvragen" Click="btnAanvragen_Click"/>
-        <Button x:Name="btnKoppelen" Grid.Row="5" Grid.Column="1" Style="{StaticResource Button}" Content="Chauffeurs koppelen" Click="btnKoppelen_Click"/>
-        <Button x:Name="btnOntkoppelen" Grid.Row="7" Grid.Column="1" Style="{StaticResource Button}" Content="Chauffeurs ontkoppelen" Click="btnOntkoppelen_Click"/>
+        <Button x:Name="btnAanvragen" Grid.Row="3" Grid.Column="1" Content="Chauffeursaanvragen" Click="btnAanvragen_Click"/>
+        <Button x:Name="btnKoppelen" Grid.Row="5" Grid.Column="1" Content="Chauffeurs koppelen" Click="btnKoppelen_Click"/>
+        <Button x:Name="btnOntkoppelen" Grid.Row="7" Grid.Column="1" Content="Chauffeurs ontkoppelen" Click="btnOntkoppelen_Click"/>
     </Grid>
 </Window>
