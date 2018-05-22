@@ -11,7 +11,7 @@ namespace IXAT
 {
     class Database
     {
-        private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=");
+        private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=;SslMode=none");
 
         public bool Login(string sUsername, string sPassword)
         {
@@ -44,27 +44,16 @@ namespace IXAT
 
         public DataTable getChauffeurAanvragen()
         {
-            DataTable dataTable = null;
-            try
-            {
-                connection.Open();
+            connection.Open();
 
-                MySqlCommand sqlCommand = connection.CreateCommand();
-                sqlCommand.CommandText = "SELECT klantID as id, klant.naam FROM chauffeur_aanvraag INNER JOIN klant ON chauffeur_aanvraag.klantID = klant.id";
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT klantID as id, klant.naam FROM chauffeur_aanvraag INNER JOIN klant ON chauffeur_aanvraag.klantID = klant.id";
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
-                MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
 
-                dataTable = new DataTable();
-                dataTable.Load(dataReader);
-            }
-            catch (Exception)
-            {
-                //Do nothing
-            }
-            finally
-            {
-                connection.Close();
-            }
+            connection.Close();
 
             return dataTable;
         }
