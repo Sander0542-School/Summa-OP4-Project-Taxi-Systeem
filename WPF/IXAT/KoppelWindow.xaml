@@ -53,11 +53,12 @@
         <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16"/>
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Selecteer een chauffeur" FontSize="22" Style="{StaticResource TextBlockDark}"/>
         <Button Grid.Column="3" Grid.Row="20" Content="Koppel chauffeur" Style="{StaticResource Button}"/>
-        <TextBox Grid.Column="1" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
-        <TextBox Grid.Column="1" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
-        <TextBox Grid.Column="1" Grid.Row="12" Style="{StaticResource TextBoxDark}"/>
-        <TextBox Grid.Column="3" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
-        <TextBox Grid.Column="3" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
-        <TextBox Grid.Column="3" Grid.Row="12" Style="{StaticResource TextBoxDark}"/>
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22" Style="{StaticResource TextBlockDark}"/>
+        <TextBox Name="aantalPassagiers" Grid.Column="1" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Name="laadruimte" Grid.Column="1" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Name="mobielNummer" Grid.Column="1" Grid.Row="12" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Name="datum" Grid.Column="3" Grid.Row="8" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Name="tijd" Grid.Column="3" Grid.Row="10" Style="{StaticResource TextBoxDark}"/>
+        <TextBox Name="email" Grid.Column="3" Grid.Row="12" Style="{StaticResource TextBoxDark}"/>
     </Grid>
 </Window>
