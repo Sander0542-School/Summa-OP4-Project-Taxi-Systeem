@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:IXAT"
         mc:Ignorable="d"
         Title="KoppelWindow" Height="800" Width="1366" ResizeMode="CanMinimize" WindowState="Maximized" Closed="Window_Closed">
@@ -52,7 +53,7 @@
         <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbRequests_SelectionChanged"/>
         <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16" SelectionChanged="cbChauffeurNaam_SelectionChanged"/>
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Selecteer een chauffeur" FontSize="22"/>
-        <Button Grid.Column="3" Grid.Row="20" Content="Koppel chauffeur"/>
+        <Button Grid.Column="3" Grid.Row="18" Content="Koppel chauffeur"/>
         <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22"/>
         <TextBox Name="tbAantalPassagiers" Grid.Column="1" Grid.Row="8" IsReadOnly="True"/>
         <TextBox Name="tbLaadruimte" Grid.Column="1" Grid.Row="10" IsReadOnly="True"/>
@@ -60,5 +61,6 @@
         <TextBox Name="tbDatum" Grid.Column="3" Grid.Row="8" IsReadOnly="True"/>
         <TextBox Name="tbTijd" Grid.Column="3" Grid.Row="10" IsReadOnly="True"/>
         <TextBox Name="tbEmail" Grid.Column="3" Grid.Row="12" IsReadOnly="True"/>
+        <m:Map x:Name="bingMaps" Grid.Row="3" Grid.RowSpan="12" Grid.Column="5" Center="51.466448, 5.4964" ZoomLevel="12" CredentialsProvider="AkfnB70S4jexw95YfQIkm-4FSK3x25_UFRyhJ4AIY1TjaNRrXgrJMnzrL54-YV6m"/>
     </Grid>
 </Window>

@@ -13,6 +13,23 @@ namespace IXAT
     {
         private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=;SslMode=none");
 
+        public DataTable runSelectQuery(string query)
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = query;
+
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            connection.Close();
+
+            return dataTable;
+        }
+
         public bool Login(string sUsername, string sPassword)
         {
             bool bResult = false;
@@ -140,6 +157,38 @@ namespace IXAT
             connection.Close();
 
             return dataTable;
+        }
+
+        public DataTable getTaxiAanvraagLocations()
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT klantID, klant.naam, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON taxi_aanvraag.klantID = klant.id";
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dtKlanten = new DataTable();
+            dtKlanten.Load(dataReader);
+
+            connection.Close();
+
+            return dtKlanten;
+        }
+
+        public DataTable getChauffeurLocations()
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT klant.id as klantID, naam, chauffeur.latitude, chauffeur.longitude FROM klant INNER JOIN chauffeur ON klant.chauffeurID = chauffeur.id WHERE NOT klant.chauffeurID is null";
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dtChauffeurs = new DataTable();
+            dtChauffeurs.Load(dataReader);
+
+            connection.Close();
+
+            return dtChauffeurs;
         }
 
 

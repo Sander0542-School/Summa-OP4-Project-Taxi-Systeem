@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Maps.MapControl.WPF;
+using Microsoft.Maps.MapControl.WPF.Design;
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -29,6 +32,26 @@ namespace IXAT
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             updateTaxiAanvragen();
+
+            DataTable dtKlantLocations = dbConnection.getTaxiAanvraagLocations();
+
+            foreach (DataRow row in dtKlantLocations.Rows)
+            {
+                double.TryParse(row["latitude"].ToString(), out double latitude);
+                double.TryParse(row["longitude"].ToString(), out double longitude);
+
+                addPointOnMap(latitude, longitude, Brushes.Green);
+            }
+
+            DataTable dtChauffeurLocations = dbConnection.getChauffeurLocations();
+
+            foreach (DataRow row in dtChauffeurLocations.Rows)
+            {
+                double.TryParse(row["latitude"].ToString(), out double latitude);
+                double.TryParse(row["longitude"].ToString(), out double longitude);
+
+                addPointOnMap(latitude, longitude, Brushes.Blue);
+            }
         }
 
         private void updateInformatie(string sAanvraagID)
@@ -91,6 +114,17 @@ namespace IXAT
         private void cbChauffeurNaam_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void addPointOnMap(double latitude, double longitude, Brush color)
+        {
+            Location location = new Location(latitude, longitude);
+            Pushpin pushpin = new Pushpin();
+            pushpin.Location = location;
+
+            pushpin.Background = color;
+
+            bingMaps.Children.Add(pushpin);
         }
     }
 }

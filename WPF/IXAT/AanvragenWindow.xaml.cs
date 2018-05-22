@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IXAT
 {
@@ -22,7 +23,11 @@ namespace IXAT
     {
         private Database dbConnection = new Database();
 
+        private DispatcherTimer timerDatabase = new DispatcherTimer();
+
         private string sCurrentKlantID = null;
+
+        private DataTable dtStatus = null;
 
         public AanvragenWindow()
         {
@@ -30,11 +35,36 @@ namespace IXAT
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
+            timerDatabase.Interval = new TimeSpan(0, 0, 1);
+            timerDatabase.Tick += TimerDatabase_Tick;
+            timerDatabase.Start();
+
             updateChauffeurAanvragen();
+        }
+
+        private void TimerDatabase_Tick(object sender, EventArgs e)
+        {
+            timerDatabase.Stop();
+
+            DataTable dataTable = dbConnection.runSelectQuery("SELECT * FROM chauffeur_aanvraag");
+
+            if (dataTable == dtStatus || dtStatus == null)
+            {
+                btnReload.Visibility = Visibility.Collapsed;
+                dtStatus = dataTable;
+                timerDatabase.Start();
+            }
+            else
+            {
+                btnReload.Visibility = Visibility.Visible;
+            }
         }
 
         private void updateChauffeurAanvragen()
         {
+            dtStatus = null;
+            cbRequests.SelectedIndex = 0;
+
             DataTable dataTable = dbConnection.getChauffeurAanvragen();
 
             DataRow dataRow = dataTable.NewRow();
@@ -99,7 +129,7 @@ namespace IXAT
         {
             ComboBox comboBox = (ComboBox)sender;
 
-            if (comboBox.SelectedIndex != 0)
+            if (comboBox.SelectedIndex != 0 && comboBox.SelectedValue != null)
             {
                 updateInformatie(comboBox.SelectedValue.ToString());
             }
@@ -139,6 +169,15 @@ namespace IXAT
                 }
             }
             updateChauffeurAanvragen();
+        }
+
+        private void btnReload_Click(object sender, RoutedEventArgs e)
+        {
+            updateChauffeurAanvragen();
+
+            btnReload.Visibility = Visibility.Collapsed;
+
+            timerDatabase.Start();
         }
     }
 }
