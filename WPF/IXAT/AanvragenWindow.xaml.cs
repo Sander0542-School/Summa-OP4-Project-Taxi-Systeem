@@ -122,6 +122,7 @@ namespace IXAT
                     MessageBox.Show("Kon de aanvraag niet accepteren", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            updateChauffeurAanvragen();
         }
 
         private void btnReject_Click(object sender, RoutedEventArgs e)
@@ -137,6 +138,7 @@ namespace IXAT
                     MessageBox.Show("Kon de aanvraag niet weigeren", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            updateChauffeurAanvragen();
         }
     }
 }
