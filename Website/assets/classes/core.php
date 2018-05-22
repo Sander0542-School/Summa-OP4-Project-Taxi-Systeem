@@ -256,6 +256,10 @@ class CORE
 			$stmt->bindparam(":aanvraagID",$aanvraagID);
 			$stmt->execute();
 
+			$stmt2 = $this->conn->prepare("UPDATE chauffeur SET vrij='0' WHERE id=:chauffeurID;");
+			$stmt2->bindparam(":chauffeurID",$chauffeurID);
+			$stmt2->execute();
+
 			return 0;
 		} catch (PDOException $ex) {
 			return 1;
@@ -276,7 +280,7 @@ class CORE
 	}
 
 	public function getOpenRequests($chauffeurID) {
-		$stmt = $this->conn->prepare("SELECT aanvraagID, naam, minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE (taxi_aanvraag.chauffeurID is null OR taxi_aanvraag.chauffeurID = :chauffeurID) AND klaar = '0';");
+		$stmt = $this->conn->prepare("SELECT aanvraagID, naam, minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE taxi_aanvraag.chauffeurID = :chauffeurID AND klaar = '0';");
 		$stmt->bindparam(":chauffeurID",$chauffeurID);
 		$stmt->execute();
 		$PS = $stmt->fetchAll(PDO::FETCH_ASSOC);
