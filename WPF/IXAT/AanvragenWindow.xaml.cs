@@ -113,7 +113,14 @@ namespace IXAT
         {
             if (sCurrentKlantID != null)
             {
-                dbConnection.acceptChauffeurAanvraag(sCurrentKlantID);
+                if (dbConnection.acceptChauffeurAanvraag(sCurrentKlantID))
+                {
+                    MessageBox.Show("Aanvraag succesvol geaccepteerd", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Kon de aanvraag niet accepteren", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -123,13 +130,59 @@ namespace IXAT
             {
                 if (dbConnection.deleteChauffeurAanvraag(sCurrentKlantID))
                 {
-                    MessageBox.Show("Kon de aanvraag niet weigeren", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Aanvraag succesvol geweigert", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Aanvraag succesvol geweigert", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Kon de aanvraag niet weigeren", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public DataTable getTaxiAanvragen()
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT aanvraagID as id, klant.naam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE klaar = '0';";
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            connection.Close();
+
+            return dataTable;
+        }
+
+        public DataTable getTaxiAanvraag(string sAanvraagID)
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE aanvraagID = @id AND klaar = '0';";
+            sqlCommand.Parameters.AddWithValue("@id", sAanvraagID);
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            connection.Close();
+
+            return dataTable;
         }
     }
 }

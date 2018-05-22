@@ -69,6 +69,6 @@
         <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Style="{StaticResource ButtonSuccess}" Content="Accepteren" Click="btnAccept_Click"/>
         <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Style="{StaticResource ButtonDanger}" Content="Weigeren" Click="btnReject_Click"/>
 
-        <Image Grid.Column="5" Grid.Row="3" Grid.RowSpan="16" VerticalAlignment="Top" Source="Images/chauffeur.png"/>
+        <Image Grid.Column="5" Grid.Row="3" Grid.RowSpan="16" VerticalAlignment="Top"/>
     </Grid>
 </Window>
