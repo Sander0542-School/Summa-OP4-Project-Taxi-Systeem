@@ -3,7 +3,21 @@ $pageTitle = "Klanten";
 include_once "assets/head.php";
 
 if ($CORE->is_logged_in()) {
-  if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["username"]) && isset($_POST["password"]))
+  if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["username"]) && isset($_POST["password"])) {
+    $RESULT = $CORE->updateKlant($_POST["naam"],$_POST["email"],$_POST["mobiel"],$_POST["password"]);
+    switch ($RESULT) {
+      case 0:
+        echo $CORE->showAlert("U heeft uw gegevens succesvol geupdate");
+        break;
+      case 1:
+        echo $CORE->showAlert("Kon gegevens niet updaten", "warning");
+        break;
+      case 2:
+        echo $CORE->showAlert("U moet inloggen om uw klant gegevens te kunnen updaten", "warning");
+        break;
+    }
+    $U_DATA = $CORE->load_user_data();
+  }
   echo '
     <form method="POST">
       <div class="container">
@@ -14,13 +28,13 @@ if ($CORE->is_logged_in()) {
             <br/>
             <div class="row chauffeur">
               <div class="col">
-                <input name="naam" type="text" class="form-control" placeholder="Naam" required><br/>
-                <input name="mobiel" type="tel" class="form-control" placeholder="Mobiel Nummer" required><br/>
-                <input name="email" type="email" class="form-control" placeholder="E-mailadres" required><br/>
+                <input name="naam" type="text" class="form-control" placeholder="Naam" value="'.$U_DATA["naam"].'" required><br/>
+                <input name="mobiel" type="tel" class="form-control" placeholder="Mobiel Nummer" value="'.$U_DATA["mobiel"].'" required><br/>
+                <input name="email" type="email" class="form-control" placeholder="E-mailadres" value="'.$U_DATA["email"].'" required><br/>
               </div>
               <div class="col-40px"></div>
               <div class="col d-flex flex-column">
-                <input name="username" type="text" class="form-control" placeholder="Gebruikersnaam" required><br/>
+                <input name="username" type="text" class="form-control" value="'.$U_DATA["gebruikersnaam"].'" placeholder="Gebruikersnaam" required readonly><br/>
                 <input name="password" type="password" class="form-control" placeholder="Huidig Wachtwoord" required><br/>
                 <input type="submit" value="Update!" class="btn btn-block btn-dark mt-auto margin-bottom-25px">
               </div>
@@ -46,7 +60,6 @@ if ($CORE->is_logged_in()) {
         break;
     }
   }
-}
 
   echo '
     <form method="POST">
@@ -79,6 +92,7 @@ if ($CORE->is_logged_in()) {
         </div>
       </div>
     </form>';
+}
 
 ?>
 

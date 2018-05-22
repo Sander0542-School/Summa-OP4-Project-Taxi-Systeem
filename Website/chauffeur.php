@@ -50,6 +50,9 @@ if (isset($_POST["type"])) {
       }
     }
   }
+  if ($U_DATA["chauffeurID"] != null) {
+    $UC_DATA = $CORE->load_chauffeur_data($U_DATA["chauffeurID"]);
+  }
 }
 
 if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
@@ -69,12 +72,12 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
               </div>
               <div class="col-40px"></div>
               <div class="col">
-                <input name="automerk" type="text" class="form-control" value="'.$UC_DATA["automerk"].'" required><br/>
-                <input name="autotype" type="text" class="form-control" value="'.$UC_DATA["autotype"].'" required><br/>
-                <input name="kenteken" type="text" class="form-control" value="'.$UC_DATA["kenteken"].'" required><br/>
-                <input name="passagiers" type="number" class="form-control" value="'.$UC_DATA["aantal_passagiers"].'" required><br/>
-                <input name="laadruimte" type="number" class="form-control" value="'.$UC_DATA["laadruimte"].'" required><br/>
-                <input name="schadevrij" type="number" class="form-control" value="'.$UC_DATA["schadevrije_jaren"].'" required><br/>
+                <input name="automerk" type="text" class="form-control" value="'.$UC_DATA["automerk"].'" placeholder="Automerk" required><br/>
+                <input name="autotype" type="text" class="form-control" value="'.$UC_DATA["autotype"].'" placeholder="Autotype" required><br/>
+                <input name="kenteken" type="text" class="form-control" value="'.$UC_DATA["kenteken"].'" placeholder="Kenteken" required><br/>
+                <input name="passagiers" type="number" class="form-control" value="'.$UC_DATA["aantal_passagiers"].'" placeholder="Aantal passagiers" required><br/>
+                <input name="laadruimte" type="number" class="form-control" value="'.$UC_DATA["laadruimte"].'" placeholder="Laadruimte" required><br/>
+                <input name="schadevrij" type="number" class="form-control" value="'.$UC_DATA["schadevrije_jaren"].'" placeholder="Schadevrije jaren" required><br/>
               </div>
               <div class="col-40px"></div>
               <div class="col d-flex flex-column">

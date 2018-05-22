@@ -63,7 +63,7 @@ if ($CORE->is_logged_in()) {
 								<br/>
 								<input name="laadruimte" type="tel" class="form-control" placeholder="Laadruimte" required>
 								<br/>
-								<input type="tel" class="form-control" placeholder="Mobiel Nummer" value="'.$U_DATA["mobiel"].'" required>
+								<input type="tel" class="form-control" placeholder="Mobiel Nummer" value="'.$U_DATA["mobiel"].'"disabled required>
 								<br/>
 								<input type="hidden" name="lat" id="user-lat">
 								<input type="hidden" name="lng" id="user-lng">

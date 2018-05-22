@@ -4,9 +4,6 @@ include_once "assets/head.php";
 if (isset($_POST["verzenden"])) {
   echo $CORE->showAlert("U heeft uw bericht verzonden!");
 }
-else {
-  echo $CORE->showAlert("Kan uw bericht niet verzenden!", "warning");
-}
 ?>
   <div class="container">
     <div class="row">

@@ -148,17 +148,20 @@ class CORE
 		}
   }
 
-	public function updateKlant($name, $email, $mobile, $username, $password) {
-		if ($CORE->is_logged_in()) {
+	public function updateKlant($name, $email, $mobile, $password) {
+		if ($this->is_logged_in()) {
 			try {
-				$stmt = $this->conn->prepare("UPDATE klant SET naam=:name, email=:email, mobiel=:mobile, gebruikersnaam=:username WHERE id=:klantID AND wachtwoord=:password;");
+				$stmt = $this->conn->prepare("SELECT gebruikersnaam FROM klant WHERE id=:klantID AND wachtwoord=:password;");
 				$stmt->bindparam(":klantID",$_SESSION['userSession']);
-				$stmt->bindparam(":name",$name);
-				$stmt->bindparam(":email",$email);
-				$stmt->bindparam(":mobile",$mobile);
-				$stmt->bindparam(":username",$username);
 				$stmt->bindparam(":password",$password);
-				$stmt->execute();
+					
+				$stmt2 = $this->conn->prepare("UPDATE klant SET naam=:name, email=:email, mobiel=:mobile WHERE id=:klantID AND wachtwoord=:password;");
+				$stmt2->bindparam(":klantID",$_SESSION['userSession']);
+				$stmt2->bindparam(":name",$name);
+				$stmt2->bindparam(":email",$email);
+				$stmt2->bindparam(":mobile",$mobile);
+				$stmt2->bindparam(":password",$password);
+				$stmt2->execute();
 
 				return 0;
 			} catch (PDOException $ex) {
@@ -171,7 +174,7 @@ class CORE
 
 	public function updateChauffeur($chauffeurID, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) {
 		try {
-			$stmt = $this->conn->prepare("UPDATE chauffeur SET automerk=:automerk, autotype=:autotype, kenteken=:kenteken, aantal_passagiers=:aantal_passagiers, laadruimte:laadruimte, schadevrije_jaren:schadevrije_jaren WHERE id=:chauffeurID;");
+			$stmt = $this->conn->prepare("UPDATE chauffeur SET automerk=:automerk, autotype=:autotype, kenteken=:kenteken, aantal_passagiers=:aantal_passagiers, laadruimte=:laadruimte, schadevrije_jaren=:schadevrije_jaren WHERE id=:chauffeurID;");
 			$stmt->bindparam(":chauffeurID",$chauffeurID);
 			$stmt->bindparam(":automerk",$autoMerk);
 			$stmt->bindparam(":autotype",$autoType);
