@@ -56,18 +56,18 @@
         <ComboBox x:Name="cbRequests" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbRequests_SelectionChanged"/>
         <TextBlock Grid.Column="1" Grid.Row="5" Text="Gegevens" FontSize="20"/>
 
-        <TextBox Grid.Column="1" Grid.Row="6"/>
-        <TextBox Grid.Column="1" Grid.Row="8"/>
-        <TextBox Grid.Column="1" Grid.Row="10"/>
-        <TextBox Grid.Column="3" Grid.Row="6"/>
-        <TextBox Grid.Column="3" Grid.Row="8"/>
-        <TextBox Grid.Column="3" Grid.Row="10"/>
-        <TextBox Grid.Column="3" Grid.Row="12"/>
-        <TextBox Grid.Column="3" Grid.Row="14"/>
-        <TextBox Grid.Column="3" Grid.Row="16"/>
+        <TextBox x:Name="tbNaam" Grid.Column="1" Grid.Row="6"/>
+        <TextBox x:Name="tbMobiel" Grid.Column="1" Grid.Row="8"/>
+        <TextBox x:Name="tbEmail" Grid.Column="1" Grid.Row="10"/>
+        <TextBox x:Name="tbAutomerk" Grid.Column="3" Grid.Row="6"/>
+        <TextBox x:Name="tbAutotype" Grid.Column="3" Grid.Row="8"/>
+        <TextBox x:Name="tbKenteken" Grid.Column="3" Grid.Row="10"/>
+        <TextBox x:Name="tbPassagiers" Grid.Column="3" Grid.Row="12"/>
+        <TextBox x:Name="tbLaadruimte" Grid.Column="3" Grid.Row="14"/>
+        <TextBox x:Name="tbSchadevrij" Grid.Column="3" Grid.Row="16"/>
 
-        <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Style="{StaticResource ButtonSuccess}" Content="Accepteren"/>
-        <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Style="{StaticResource ButtonDanger}" Content="Weigeren"/>
+        <Button x:Name="btnAccept" Grid.Row="18" Grid.Column="3" Style="{StaticResource ButtonSuccess}" Content="Accepteren" Click="btnAccept_Click"/>
+        <Button x:Name="btnReject" Grid.Row="20" Grid.Column="3" Style="{StaticResource ButtonDanger}" Content="Weigeren" Click="btnReject_Click"/>
 
         <Image Grid.Column="5" Grid.Row="3" Grid.RowSpan="16" VerticalAlignment="Top" Source="Images/chauffeur.png"/>
     </Grid>
