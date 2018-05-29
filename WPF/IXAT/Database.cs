@@ -191,9 +191,27 @@ namespace IXAT
             return dtChauffeurs;
         }
 
-
-
-
+        public bool compareDatatables(DataTable dataTableOld, DataTable dataTableNew)
+        {
+            if (dataTableOld != null && dataTableNew != null)
+            {
+                if (dataTableOld.Rows.Count == dataTableNew.Rows.Count && dataTableOld.Columns.Count == dataTableNew.Columns.Count)
+                {
+                    for (int iRow = 0; iRow < dataTableOld.Rows.Count; iRow++)
+                    {
+                        for (int iColumn = 0; iColumn < dataTableOld.Columns.Count; iColumn++)
+                        {
+                            if (dataTableOld.Rows[iRow][iColumn].ToString() != dataTableNew.Rows[iRow][iColumn].ToString())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public DataTable getTaxiAanvragen()
         {
