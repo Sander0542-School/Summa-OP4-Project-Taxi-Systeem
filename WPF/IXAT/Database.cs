@@ -11,7 +11,8 @@ namespace IXAT
 {
     class Database
     {
-        private MySqlConnection connection = new MySqlConnection("Server=sanderjochems.nl;Database=ixat_taxis;Uid=ixat;Pwd=QzA4AWAFBgdhS3FZ;SslMode=none");
+        //private MySqlConnection connection = new MySqlConnection("Server=sanderjochems.nl;Database=ixat_taxis;Uid=ixat;Pwd=QzA4AWAFBgdhS3FZ;SslMode=none");
+        private MySqlConnection connection = new MySqlConnection("Server=localhost;Database=ixat_taxis;Uid=root;Pwd=;SslMode=none");
 
         public DataTable runSelectQuery(string query)
         {

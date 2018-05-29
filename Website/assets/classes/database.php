@@ -1,10 +1,14 @@
 <?php
 class Database
 {
-  private $host = "sanderjochems.nl";
+  private $host = "localhost";
   private $db_name = "ixat_taxis";
-  private $username = "ixat";
-  private $password = "QzA4AWAFBgdhS3FZ";
+  private $username = "root";
+  private $password = "";
+  // private $host = "sanderjochems.nl";
+  // private $db_name = "ixat_taxis";
+  // private $username = "ixat";
+  // private $password = "QzA4AWAFBgdhS3FZ";
   
   public $conn;
 
