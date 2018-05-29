@@ -5,8 +5,8 @@ include_once "assets/head.php";
 if (isset($_POST["type"])) {
   $type = $_POST["type"];
   if ($type == "newCustomer") {
-    if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"]) && isset($_POST["gebruikersnaam"]) && isset($_POST["wachtwoord"]) && isset($_POST["wachtwoord2"])) {
-      $result = $CORE->registerDriver($_POST["gebruikersnaam"],$_POST["wachtwoord"],$_POST["wachtwoord2"],$_POST["naam"],$_POST["mobiel"],$_POST["email"],$_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"]);
+    if (isset($_POST["naam"]) && isset($_POST["mobiel"]) && isset($_POST["email"]) && isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"]) && isset($_POST["gebruikersnaam"]) && isset($_POST["wachtwoord"]) && isset($_POST["wachtwoord2"]) && $_POST["rijbewijs"]) {
+      $result = $CORE->registerDriver($_POST["gebruikersnaam"],$_POST["wachtwoord"],$_POST["wachtwoord2"],$_POST["naam"],$_POST["mobiel"],$_POST["email"],$_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"],$_POST["rijbewijs"]);
       switch ($result) {
         case 0:
           echo $CORE->showAlert("Account gemaakt en uw aanvraag voor chauffeur is ingediend");
@@ -26,8 +26,8 @@ if (isset($_POST["type"])) {
       }
     }
   } elseif ($type == "newDriver" && $CORE->is_logged_in()) {
-    if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"])) {
-      $result = $CORE->requestDriver($U_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"]);
+    if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"]) && isset($_POST["rijbewijs"])) {
+      $result = $CORE->requestDriver($U_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"],$_POST["rijbewijs"]);
       switch ($result) {
         case 0:
           echo $CORE->showAlert("Aanvraag voor chauffeur ingediend");
@@ -38,8 +38,8 @@ if (isset($_POST["type"])) {
       }
     }
   } elseif ($type == "updateDriver" && $CORE->is_logged_in()) {
-    if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"])) {
-      $result = $CORE->updateChauffeur($UC_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"]);
+    if (isset($_POST["automerk"]) && isset($_POST["autotype"]) && isset($_POST["kenteken"]) && isset($_POST["passagiers"]) && isset($_POST["laadruimte"]) && isset($_POST["schadevrij"]) && isset($_POST["rijbewijs"])) {
+      $result = $CORE->updateChauffeur($UC_DATA["id"], $_POST["automerk"],$_POST["autotype"],$_POST["kenteken"],$_POST["passagiers"],$_POST["laadruimte"],$_POST["schadevrij"],$_POST["rijbewijs"]);
       switch ($result) {
         case 0:
           echo $CORE->showAlert("Uw gegevens zijn bijgewerkt");
@@ -69,6 +69,11 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
                 <input name="naam" type="text" class="form-control" value="'.$U_DATA["naam"].'" required readonly><br/>
                 <input name="mobiel" type="tel" class="form-control" value="'.$U_DATA["mobiel"].'" required readonly><br/>
                 <input name="email" type="email" class="form-control" value="'.$U_DATA["email"].'" required readonly><br/>
+                <select class="custom-select" name="rijbewijs[]" id="rijbewijzen" multiple required>
+                  <option value="a"'; if (strpos($UC_DATA["rijbewijs"], 'A') !== false) { echo ' selected'; } echo '>Rijbewijs A</option>
+                  <option value="b"'; if (strpos($UC_DATA["rijbewijs"], 'B') !== false) { echo ' selected'; } echo '>Rijbewijs B</option>
+                  <option value="c"'; if (strpos($UC_DATA["rijbewijs"], 'C') !== false) { echo ' selected'; } echo '>Rijbewijs C</option>
+                </select>
               </div>
               <div class="col-40px"></div>
               <div class="col">
@@ -109,6 +114,11 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
                 <input name="naam" type="text" class="form-control" value="'.$U_DATA["naam"].'" required readonly><br/>
                 <input name="mobiel" type="tel" class="form-control" value="'.$U_DATA["mobiel"].'" required readonly><br/>
                 <input name="email" type="email" class="form-control" value="'.$U_DATA["email"].'" required readonly><br/>
+                <select class="custom-select" name="rijbewijs[]" id="rijbewijzen" multiple required>
+                  <option value="a">Rijbewijs A</option>
+                  <option value="b">Rijbewijs B</option>
+                  <option value="c">Rijbewijs C</option>
+                </select>
               </div>
               <div class="col-40px"></div>
               <div class="col">
@@ -146,6 +156,11 @@ if ($CORE->is_logged_in() && $U_DATA["chauffeurID"] != null) {
                 <input name="naam" type="text" class="form-control" placeholder="Naam" required><br/>
                 <input name="mobiel" type="tel" class="form-control" placeholder="Mobiel Nummer" required><br/>
                 <input name="email" type="email" class="form-control" placeholder="E-mailadres" required><br/>
+                <select class="custom-select" name="rijbewijs[]" id="rijbewijzen" multiple required>
+                  <option value="a">Rijbewijs A</option>
+                  <option value="b">Rijbewijs B</option>
+                  <option value="c">Rijbewijs C</option>
+                </select>
               </div>
               <div class="col-40px"></div>
               <div class="col">

@@ -90,7 +90,7 @@ class CORE
 		}
   }
   
-  public function registerDriver($gebruikersnaam, $wachtwoord, $wachtwoord2, $naam, $mobiel, $email, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) 
+  public function registerDriver($gebruikersnaam, $wachtwoord, $wachtwoord2, $naam, $mobiel, $email, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij, $rijbewijzen) 
   {
 		try {
 			if ($wachtwoord == $wachtwoord2) {
@@ -108,7 +108,7 @@ class CORE
 
 			try {
 				if ($klantID != 0) {
-					$stmt = $this->conn->prepare("INSERT INTO chauffeur_aanvraag (klantID, automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren) VALUES (:klantID, :automerk, :autotype, :kenteken, :aantal_passagiers, :laadruimte, :schadevrije_jaren);");
+					$stmt = $this->conn->prepare("INSERT INTO chauffeur_aanvraag (klantID, automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren, rijbewijs) VALUES (:klantID, :automerk, :autotype, :kenteken, :aantal_passagiers, :laadruimte, :schadevrije_jaren, :rijbewijs);");
 					$stmt->bindparam(":klantID",$klantID);
 					$stmt->bindparam(":automerk",$autoMerk);
 					$stmt->bindparam(":autotype",$autoType);
@@ -116,6 +116,7 @@ class CORE
 					$stmt->bindparam(":aantal_passagiers",$passagiers);
 					$stmt->bindparam(":laadruimte",$laadruimte);
 					$stmt->bindparam(":schadevrije_jaren",$schadevrij);
+					$stmt->bindparam(":rijbewijs",implode(',', $rijbewijzen));
 					$stmt->execute();
 					return 4;
 				} else {
@@ -130,10 +131,11 @@ class CORE
 		}
   }
   
-  public function requestDriver($klantID, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) 
+  public function requestDriver($klantID, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij, $rijbewijzen) 
   {
+		$rijbewijzen = implode(',', $rijbewijzen);
 		try {
-			$stmt = $this->conn->prepare("INSERT INTO chauffeur_aanvraag (klantID, automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren) VALUES (:klantID, :automerk, :autotype, :kenteken, :aantal_passagiers, :laadruimte, :schadevrije_jaren);");
+			$stmt = $this->conn->prepare("INSERT INTO chauffeur_aanvraag (klantID, automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren, rijbewijs) VALUES (:klantID, :automerk, :autotype, :kenteken, :aantal_passagiers, :laadruimte, :schadevrije_jaren, :rijbewijs);");
 			$stmt->bindparam(":klantID",$klantID);
 			$stmt->bindparam(":automerk",$autoMerk);
 			$stmt->bindparam(":autotype",$autoType);
@@ -141,6 +143,7 @@ class CORE
 			$stmt->bindparam(":aantal_passagiers",$passagiers);
 			$stmt->bindparam(":laadruimte",$laadruimte);
 			$stmt->bindparam(":schadevrije_jaren",$schadevrij);
+			$stmt->bindparam(":rijbewijs",$rijbewijzen);
 			$stmt->execute();
 			return 0;
 		} catch (PDOException $ex) {
@@ -148,7 +151,8 @@ class CORE
 		}
   }
 
-	public function updateKlant($name, $email, $mobile, $password) {
+	public function updateKlant($name, $email, $mobile, $password) 
+	{
 		if ($this->is_logged_in()) {
 			try {
 				$stmt = $this->conn->prepare("SELECT gebruikersnaam FROM klant WHERE id=:klantID AND wachtwoord=:password;");
@@ -172,9 +176,11 @@ class CORE
 		}
 	}
 
-	public function updateChauffeur($chauffeurID, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij) {
+	public function updateChauffeur($chauffeurID, $autoMerk, $autoType, $kenteken, $passagiers, $laadruimte, $schadevrij, $rijbewijzen) 
+	{
+		$rijbewijzen = implode(',', $rijbewijzen);
 		try {
-			$stmt = $this->conn->prepare("UPDATE chauffeur SET automerk=:automerk, autotype=:autotype, kenteken=:kenteken, aantal_passagiers=:aantal_passagiers, laadruimte=:laadruimte, schadevrije_jaren=:schadevrije_jaren WHERE id=:chauffeurID;");
+			$stmt = $this->conn->prepare("UPDATE chauffeur SET automerk=:automerk, autotype=:autotype, kenteken=:kenteken, aantal_passagiers=:aantal_passagiers, laadruimte=:laadruimte, schadevrije_jaren=:schadevrije_jaren, rijbewijs=:rijbewijs WHERE id=:chauffeurID;");
 			$stmt->bindparam(":chauffeurID",$chauffeurID);
 			$stmt->bindparam(":automerk",$autoMerk);
 			$stmt->bindparam(":autotype",$autoType);
@@ -182,6 +188,7 @@ class CORE
 			$stmt->bindparam(":aantal_passagiers",$passagiers);
 			$stmt->bindparam(":laadruimte",$laadruimte);
 			$stmt->bindparam(":schadevrije_jaren",$schadevrij);
+			$stmt->bindparam(":rijbewijs",$rijbewijzen);
 			$stmt->execute();
 
 			return 0;
@@ -233,7 +240,8 @@ class CORE
 		}
 	}
 
-	public function getRideHistory() {
+	public function getRideHistory() 
+	{
 		if ($this->is_logged_in()) {
 			$stmt = $this->conn->prepare("SELECT CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, latitude, longitude FROM taxi_aanvraag WHERE klantID=:klantID AND klaar='1';");
 			$stmt->bindparam(":klantID",$_SESSION['userSession']);
@@ -249,7 +257,8 @@ class CORE
 		}
 	}
 
-	public function accepteerRit($aanvraagID, $chauffeurID) {
+	public function accepteerRit($aanvraagID, $chauffeurID)
+	{
 		try {
 			$stmt = $this->conn->prepare("UPDATE taxi_aanvraag SET chauffeurID=:chauffeurID, geaccepteerd='1' WHERE aanvraagID=:aanvraagID;");
 			$stmt->bindparam(":chauffeurID",$chauffeurID);
@@ -266,7 +275,8 @@ class CORE
 		}
 	}
 
-	public function weigerRit($aanvraagID, $chauffeurID) {
+	public function weigerRit($aanvraagID, $chauffeurID) 
+	{
 		try {
 			$stmt = $this->conn->prepare("UPDATE taxi_aanvraag SET chauffeurID= CASE WHEN chauffeurID = :chauffeurID THEN null ELSE chauffeurID END, geaccepteerd='0' WHERE aanvraagID=:aanvraagID;");
 			$stmt->bindparam(":chauffeurID",$chauffeurID);
@@ -279,7 +289,8 @@ class CORE
 		}
 	}
 
-	public function getOpenRequests($chauffeurID) {
+	public function getOpenRequests($chauffeurID) 
+	{
 		$stmt = $this->conn->prepare("SELECT aanvraagID, naam, minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, latitude, longitude FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE taxi_aanvraag.chauffeurID = :chauffeurID AND klaar = '0';");
 		$stmt->bindparam(":chauffeurID",$chauffeurID);
 		$stmt->execute();
@@ -291,7 +302,8 @@ class CORE
 		}
 	}
 
-	public function showAlert($message, $color = "success") {
+	public function showAlert($message, $color = "success") 
+	{
 		return '<div class="container"><div class="row margin-bottom-25px"><div class="col-2"></div><div class="col-8"><div class="alert alert-'.$color.' alert-dismissible fade show">'.$message.'</div></div></div></div>';
 	}
 
