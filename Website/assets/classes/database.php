@@ -1,7 +1,7 @@
 <?php
 class Database
 {
-  private $host = "vps.sanderjochems.com";
+  private $host = "sanderjochems.nl";
   private $db_name = "ixat_taxis";
   private $username = "ixat";
   private $password = "QzA4AWAFBgdhS3FZ";
