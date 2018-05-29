@@ -114,7 +114,7 @@ namespace IXAT
                 connection.Open();
 
                 MySqlCommand sqlCommand = connection.CreateCommand();
-                sqlCommand.CommandText = "INSERT INTO chauffeur (automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren) SELECT automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren FROM chauffeur_aanvraag WHERE chauffeur_aanvraag.klantID = @klantID;";
+                sqlCommand.CommandText = "INSERT INTO chauffeur (automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren, rijbewijs) SELECT automerk, autotype, kenteken, aantal_passagiers, laadruimte, schadevrije_jaren, rijbewijs FROM chauffeur_aanvraag WHERE chauffeur_aanvraag.klantID = @klantID;";
                 sqlCommand.Parameters.AddWithValue("@klantID", sKlantID);
                 sqlCommand.ExecuteNonQuery();
 
@@ -235,7 +235,7 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE aanvraagID = @id AND klaar = '0';";
+            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, klant2.naam as chauffeurNaam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID INNER JOIN klant klant2 ON taxi_aanvraag.chauffeurID = klant.chauffeurID WHERE aanvraagID = @id AND klaar = '0';";
             sqlCommand.Parameters.AddWithValue("@id", sAanvraagID);
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
@@ -245,6 +245,56 @@ namespace IXAT
             connection.Close();
 
             return dataTable;
+        }
+
+        public DataTable getVrijeChauffeurs()
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT chauffeur.id, klant.naam FROM klant INNER JOIN chauffeur ON klant.chauffeurID = chauffeur.id WHERE chauffeur.vrij = 1;";
+            
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            connection.Close();
+
+            return dataTable;
+        }
+
+        public bool koppelTaxiAanvraag(string sAanvraagID, string sChauffeurID)
+        {
+            bool bResult;
+
+            try
+            {
+                connection.Open();
+
+                MySqlCommand sqlCommand = connection.CreateCommand();
+                sqlCommand.CommandText = "UPDATE chauffeur SET chauffeur.vrij = 0 WHERE chauffeur.id = @chauffeurID";
+                sqlCommand.Parameters.AddWithValue("@chauffeurID", sChauffeurID);
+                sqlCommand.ExecuteNonQuery();
+
+                MySqlCommand sqlCommand2 = connection.CreateCommand();
+                sqlCommand2.CommandText = "UPDATE taxi_aanvraag SET chauffeurID = @chauffeurID WHERE aanvraagID = @aanvraagID;";
+                sqlCommand2.Parameters.AddWithValue("@chauffeurID", sChauffeurID);
+                sqlCommand2.Parameters.AddWithValue("@aanvraagID", sAanvraagID);
+                sqlCommand2.ExecuteNonQuery();
+
+                bResult = true;
+            }
+            catch (Exception ex)
+            {
+                bResult = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return bResult;
         }
     }
 }

@@ -51,7 +51,7 @@
         <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Text="Chauffeurs ontkoppelen" FontSize="26"/>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Selecteer een aanvraag" FontSize="22"/>
         <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id"/>
-        <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16"/>
+        <TextBox x:Name="tbChauffeurNaam" Grid.Column="3" Grid.Row="16"/>
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Gekoppelde chauffeur" FontSize="22"/>
         <Button Grid.Column="3" Grid.Row="20" Content="Ontkoppel chauffeur"/>
         <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22"/>

@@ -32,6 +32,7 @@ namespace IXAT
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 
             updateTaxiAanvragen();
+            updateVrijeChauffeurs();
 
             DataTable dtKlantLocations = dbConnection.getTaxiAanvraagLocations();
 
@@ -40,7 +41,7 @@ namespace IXAT
                 double.TryParse(row["latitude"].ToString(), out double latitude);
                 double.TryParse(row["longitude"].ToString(), out double longitude);
 
-                addPointOnMap(latitude, longitude, Brushes.Green);
+                addPointOnMap(latitude, longitude, Brushes.Green, row["naam"].ToString());
             }
 
             DataTable dtChauffeurLocations = dbConnection.getChauffeurLocations();
@@ -50,7 +51,7 @@ namespace IXAT
                 double.TryParse(row["latitude"].ToString(), out double latitude);
                 double.TryParse(row["longitude"].ToString(), out double longitude);
 
-                addPointOnMap(latitude, longitude, Brushes.Blue);
+                addPointOnMap(latitude, longitude, Brushes.Blue, row["naam"].ToString());
             }
         }
 
@@ -87,7 +88,7 @@ namespace IXAT
         {
             ComboBox comboBox = (ComboBox)sender;
 
-            if (comboBox.SelectedIndex != 0)
+            if (comboBox.SelectedIndex != 0 && comboBox.SelectedValue != null)
             {
                 updateInformatie(comboBox.SelectedValue.ToString());
             }
@@ -102,7 +103,7 @@ namespace IXAT
 
             DataRow dataRow = dataTable.NewRow();
             dataRow[0] = 0;
-            dataRow[1] = "Kies een aavraag";
+            dataRow[1] = "Kies een aanvraag";
 
             dataTable.Rows.InsertAt(dataRow, 0);
 
@@ -111,20 +112,58 @@ namespace IXAT
             cbTaxiAanvragen.SelectedIndex = 0;
         }
 
+        private void updateVrijeChauffeurs()
+        {
+            DataTable dataTable = dbConnection.getVrijeChauffeurs();
+
+            DataRow dataRow = dataTable.NewRow();
+            dataRow[0] = 0;
+            dataRow[1] = "Kies een vrije chauffeur";
+
+            dataTable.Rows.InsertAt(dataRow, 0);
+
+            cbChauffeurNaam.ItemsSource = dataTable.DefaultView;
+
+            cbChauffeurNaam.SelectedIndex = 0;
+        }
+
         private void cbChauffeurNaam_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void addPointOnMap(double latitude, double longitude, Brush color)
+        private void addPointOnMap(double latitude, double longitude, Brush color, string sName)
         {
             Location location = new Location(latitude, longitude);
             Pushpin pushpin = new Pushpin();
             pushpin.Location = location;
-
+            cXml xml = new cXml();
+            string sAddress = xml.ReverseGeocode(latitude.ToString().Replace(",", "."), longitude.ToString().Replace(",", "."));
+            pushpin.ToolTip = "Naam: " + sName + "\nAdres: " + sAddress;
             pushpin.Background = color;
 
             bingMaps.Children.Add(pushpin);
+        }
+
+        private void btnKoppelChauffeur_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbChauffeurNaam.SelectedIndex != 0 && cbChauffeurNaam.SelectedValue != null)
+            {
+                if (cbTaxiAanvragen.SelectedIndex != 0 && cbTaxiAanvragen.SelectedValue != null)
+                {
+                    if (dbConnection.koppelTaxiAanvraag(cbTaxiAanvragen.SelectedValue.ToString(), cbChauffeurNaam.SelectedValue.ToString()))
+                    {
+                        MessageBox.Show("Succesvol gekoppeld");
+
+                        updateTaxiAanvragen();
+                        updateVrijeChauffeurs();
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
         }
     }
 }
