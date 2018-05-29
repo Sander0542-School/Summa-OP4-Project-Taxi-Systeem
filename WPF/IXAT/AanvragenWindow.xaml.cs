@@ -48,16 +48,21 @@ namespace IXAT
 
             DataTable dataTable = dbConnection.runSelectQuery("SELECT * FROM chauffeur_aanvraag");
 
-            if (dataTable == dtStatus || dtStatus == null)
+            if (dtStatus == null)
+            {
+                dtStatus = dataTable;
+            }
+
+            if (dbConnection.compareDatatables(dtStatus, dataTable))
             {
                 btnReload.Visibility = Visibility.Collapsed;
-                dtStatus = dataTable;
                 timerDatabase.Start();
             }
             else
             {
                 btnReload.Visibility = Visibility.Visible;
             }
+            dtStatus = dataTable;
         }
 
         private void updateChauffeurAanvragen()
