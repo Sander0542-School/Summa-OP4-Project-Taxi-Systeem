@@ -235,7 +235,7 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, email, mobiel, klant2.naam as chauffeurNaam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID INNER JOIN klant klant2 ON taxi_aanvraag.chauffeurID = klant.chauffeurID WHERE aanvraagID = @id AND klaar = '0';";
+            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, klant.email, klant.mobiel, klant2.naam as chauffeurNaam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID INNER JOIN klant klant2 ON taxi_aanvraag.chauffeurID = klant.chauffeurID WHERE aanvraagID = @id AND klaar = '0';";
             sqlCommand.Parameters.AddWithValue("@id", sAanvraagID);
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
