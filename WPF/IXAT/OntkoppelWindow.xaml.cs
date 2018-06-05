@@ -84,8 +84,21 @@ namespace IXAT
 
             dataTable.Rows.InsertAt(dataRow, 0);
 
-            //tbChauffeurNaam.Text = dbConnection.g
+            tbChauffeurNaam.Text = 
 
+        }
+
+        private void addPointOnMap(double latitude, double longitude, Brush color, string sName)
+        {
+            Location location = new Location(latitude, longitude);
+            Pushpin pushpin = new Pushpin();
+            pushpin.Location = location;
+            cXml xml = new cXml();
+            string sAddress = xml.ReverseGeocode(latitude.ToString().Replace(",", "."), longitude.ToString().Replace(",", "."));
+            pushpin.ToolTip = "Naam: " + sName + "\nAdres: " + sAddress;
+            pushpin.Background = color;
+
+            bingMaps.Children.Add(pushpin);
         }
     }
 }
