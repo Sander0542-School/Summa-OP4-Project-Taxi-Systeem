@@ -49,6 +49,10 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Text="Chauffeurs koppelen" FontSize="26"/>
+        <StackPanel Grid.Column="5" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnReload" Style="{StaticResource ButtonReload}" Visibility="Collapsed" Click="btnReload_Click"/>
+            <Button x:Name="btnBack" Content="Terug" VerticalAlignment="Center" Width="150" Click="btnBack_Click" />
+        </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Selecteer een aanvraag" FontSize="22"/>
         <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbRequests_SelectionChanged"/>
         <ComboBox x:Name="cbChauffeurNaam" Grid.Column="3" Grid.Row="16" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbChauffeurNaam_SelectionChanged"/>

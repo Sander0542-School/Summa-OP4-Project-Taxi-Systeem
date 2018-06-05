@@ -119,8 +119,6 @@ namespace IXAT
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            DashboardWindow dashboard = new DashboardWindow();
-            dashboard.Show();
             this.Close();
         }
 

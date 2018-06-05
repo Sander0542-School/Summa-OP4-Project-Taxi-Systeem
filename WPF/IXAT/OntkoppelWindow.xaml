@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:IXAT"
         mc:Ignorable="d"
         Title="OntkoppelWindow" Height="800" Width="1366" ResizeMode="CanMinimize" WindowState="Maximized" Closed="Window_Closed">
@@ -49,11 +50,15 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Text="Chauffeurs ontkoppelen" FontSize="26"/>
+        <StackPanel Grid.Column="5" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnReload" Style="{StaticResource ButtonReload}" Visibility="Collapsed" Click="btnReload_Click"/>
+            <Button x:Name="btnBack" Content="Terug" VerticalAlignment="Center" Width="150" Click="btnBack_Click" />
+        </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Selecteer een aanvraag" FontSize="22"/>
-        <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id"/>
+        <ComboBox x:Name="cbTaxiAanvragen" Grid.Column="3" Grid.Row="3" DisplayMemberPath="naam" SelectedValuePath="id" SelectionChanged="cbTaxiAanvragen_SelectionChanged"/>
         <TextBox x:Name="tbChauffeurNaam" Grid.Column="3" Grid.Row="16"/>
         <TextBlock Grid.Column="1" Grid.Row="16" Text="Gekoppelde chauffeur" FontSize="22"/>
-        <Button Name="btnOntkoppelChauffeur" Grid.Column="3" Grid.Row="20" Content="Ontkoppel chauffeur"/>
+        <Button Name="btnOntkoppelChauffeur" Grid.Column="3" Grid.Row="20" Content="Ontkoppel chauffeur" Click="btnOntkoppelChauffeur_Click"/>
         <TextBlock Grid.Column="1" Grid.Row="6" Text="Aanvraaggegevens" FontSize="22"/>
         <TextBox Name="tbAantalPassagiers" Grid.Column="1" Grid.Row="8"/>
         <TextBox Name="tbLaadruimte" Grid.Column="1" Grid.Row="10"/>
@@ -61,5 +66,6 @@
         <TextBox Name="tbDatum" Grid.Column="3" Grid.Row="8"/>
         <TextBox Name="tbTijd" Grid.Column="3" Grid.Row="10"/>
         <TextBox Name="tbEmail" Grid.Column="3" Grid.Row="12"/>
+        <m:Map x:Name="bingMaps" Grid.Row="3" Grid.RowSpan="12" Grid.Column="5" Center="51.466448, 5.4964" ZoomLevel="12" CredentialsProvider="AkfnB70S4jexw95YfQIkm-4FSK3x25_UFRyhJ4AIY1TjaNRrXgrJMnzrL54-YV6m"/>
     </Grid>
 </Window>

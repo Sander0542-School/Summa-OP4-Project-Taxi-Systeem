@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Maps.MapControl.WPF;
+using MySql.Data.MySqlClient;
 
 using System;
 using System.Collections.Generic;
@@ -219,7 +220,23 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = "SELECT aanvraagID as id, klant.naam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE klaar = '0';";
+            sqlCommand.CommandText = "SELECT aanvraagID as id, klant.naam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID INNER JOIN chauffeur WHERE klaar = '0';";
+            MySqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            connection.Close();
+
+            return dataTable;
+        }
+
+        public DataTable getGeaccepteerdeTaxiAanvragen()
+        {
+            connection.Open();
+
+            MySqlCommand sqlCommand = connection.CreateCommand();
+            sqlCommand.CommandText = "SELECT aanvraagID as id, klant.naam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID WHERE taxi_aanvraag.chauffeurID IS NOT NULL AND klaar = '0';";
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
             DataTable dataTable = new DataTable();
@@ -235,7 +252,8 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, klant.email, klant.mobiel, klant2.naam as chauffeurNaam FROM taxi_aanvraag INNER JOIN klant ON klant.id = taxi_aanvraag.klantID INNER JOIN klant klant2 ON taxi_aanvraag.chauffeurID = klant.chauffeurID WHERE aanvraagID = @id AND klaar = '0';";
+            //TODO: DEZE QUERY WERKT NIET!!!
+            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, klant.naam, klant.email, klant.mobiel, taxi_aanvraag.latitude, taxi_aanvraag.longitude, chauffeurKlant.naam as chauffeurNaam, chauffeurKlant.id as chauffeurID, chauffeur.latitude as latitudeChauffeur, chauffeur.longitude as longitudeChauffeur FROM taxi_aanvraag LEFT JOIN klant ON klant.id = taxi_aanvraag.klantID LEFT JOIN klant as chauffeurKlant ON taxi_aanvraag.chauffeurID = klant.id LEFT JOIN chauffeur ON chauffeurKlant.chauffeurID = chauffeur.id WHERE aanvraagID = @id AND klaar = '0';";
             sqlCommand.Parameters.AddWithValue("@id", sAanvraagID);
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
@@ -252,7 +270,7 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            sqlCommand.CommandText = "SELECT chauffeur.id, klant.naam FROM klant INNER JOIN chauffeur ON klant.chauffeurID = chauffeur.id WHERE chauffeur.vrij = 1;";
+            sqlCommand.CommandText = "SELECT chauffeur.id, klant.naam, latitude, longitude FROM klant INNER JOIN chauffeur ON klant.chauffeurID = chauffeur.id WHERE chauffeur.vrij = 1;";
             
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 
@@ -295,6 +313,43 @@ namespace IXAT
             }
 
             return bResult;
+        }
+
+        public bool ontkoppelChauffeur(string sAanvraagID, string sChauffeurID)
+        {
+            bool bResult;
+            
+            try
+            {
+                connection.Open();
+
+                MySqlCommand sqlCommand = connection.CreateCommand();
+                sqlCommand.CommandText = "UPDATE taxi_aanvraag SET taxi_aanvraag.geaccepteerd = 0, chauffeurID = NULL WHERE aanvraagID = @aanvraagID;";
+                sqlCommand.Parameters.AddWithValue("@aanvraagID", sAanvraagID);
+                sqlCommand.ExecuteNonQuery();
+
+                MySqlCommand sqlCommand2 = connection.CreateCommand();
+                sqlCommand2.CommandText = "UPDATE chauffeur SET chauffeur.vrij = 0 WHERE chauffeur.id = @chauffeurID";
+                sqlCommand2.Parameters.AddWithValue("@chauffeurID", sChauffeurID);
+                sqlCommand2.ExecuteNonQuery();
+
+                bResult = true;
+
+            }
+            catch (Exception ex)
+            {
+                bResult = false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return bResult;
+        }
+
+        public Location middleOfLocations(Location location1, Location location2)
+        {
+            return new Location((location1.Latitude + location2.Latitude) / 2, (location1.Longitude + location2.Longitude) / 2);
         }
     }
 }

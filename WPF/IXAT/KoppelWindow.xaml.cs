@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace IXAT
 {
@@ -25,11 +26,23 @@ namespace IXAT
     {
         private Database dbConnection = new Database();
 
+        private DispatcherTimer timerDatabase = new DispatcherTimer();
+
+        private DataTable dtStatus = null;
+
+        private DataTable dataTableChauffeurs;
+
+        private Location locationCurrentKlant = null;
+
         public KoppelWindow()
         {
             InitializeComponent();
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            timerDatabase.Interval = new TimeSpan(0, 0, 1);
+            timerDatabase.Tick += TimerDatabase_Tick;
+            timerDatabase.Start();
 
             updateTaxiAanvragen();
             updateVrijeChauffeurs();
@@ -55,6 +68,43 @@ namespace IXAT
             }
         }
 
+        private void TimerDatabase_Tick(object sender, EventArgs e)
+        {
+            timerDatabase.Stop();
+
+            DataTable dataTable = dbConnection.runSelectQuery("SELECT taxi_aanvraag.*, klant.* FROM taxi_aanvraag INNER JOIN klant ON taxi_aanvraag.klantID = klant.id;");
+
+            if (dtStatus == null)
+            {
+                dtStatus = dataTable;
+            }
+
+            if (dbConnection.compareDatatables(dtStatus, dataTable))
+            {
+                btnReload.Visibility = Visibility.Collapsed;
+                timerDatabase.Start();
+            }
+            else
+            {
+                btnReload.Visibility = Visibility.Visible;
+            }
+            dtStatus = dataTable;
+        }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnReload_Click(object sender, RoutedEventArgs e)
+        {
+            updateTaxiAanvragen();
+
+            btnReload.Visibility = Visibility.Collapsed;
+
+            timerDatabase.Start();
+        }
+
         private void updateInformatie(string sAanvraagID)
         {
             if (sAanvraagID != null)
@@ -67,6 +117,16 @@ namespace IXAT
                 tbDatum.Text = datatable.Rows[0]["datum"].ToString();
                 tbTijd.Text = datatable.Rows[0]["tijd"].ToString();
                 tbEmail.Text = datatable.Rows[0]["email"].ToString();
+
+                double.TryParse(datatable.Rows[0]["latitude"].ToString(), out double latitude);
+                double.TryParse(datatable.Rows[0]["longitude"].ToString(), out double longitude);
+
+                locationCurrentKlant = new Location(latitude, longitude);
+
+                bingMaps.Center = locationCurrentKlant;
+                bingMaps.ZoomLevel = 17;
+
+                updateVrijeChauffeurs();
             }
             else
             {
@@ -76,6 +136,8 @@ namespace IXAT
                 tbDatum.Text = "";
                 tbTijd.Text = "";
                 tbEmail.Text = "";
+
+                locationCurrentKlant = null;
             }
         }
 
@@ -99,6 +161,8 @@ namespace IXAT
         }
         private void updateTaxiAanvragen()
         {
+            dtStatus = null;
+
             DataTable dataTable = dbConnection.getTaxiAanvragen();
 
             DataRow dataRow = dataTable.NewRow();
@@ -114,22 +178,19 @@ namespace IXAT
 
         private void updateVrijeChauffeurs()
         {
-            DataTable dataTable = dbConnection.getVrijeChauffeurs();
+            dataTableChauffeurs = dbConnection.getVrijeChauffeurs();
 
-            DataRow dataRow = dataTable.NewRow();
+            DataRow dataRow = dataTableChauffeurs.NewRow();
             dataRow[0] = 0;
             dataRow[1] = "Kies een vrije chauffeur";
+            dataRow[2] = 0;
+            dataRow[3] = 0;
 
-            dataTable.Rows.InsertAt(dataRow, 0);
+            dataTableChauffeurs.Rows.InsertAt(dataRow, 0);
 
-            cbChauffeurNaam.ItemsSource = dataTable.DefaultView;
+            cbChauffeurNaam.ItemsSource = dataTableChauffeurs.DefaultView;
 
             cbChauffeurNaam.SelectedIndex = 0;
-        }
-
-        private void cbChauffeurNaam_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void addPointOnMap(double latitude, double longitude, Brush color, string sName)
@@ -153,16 +214,28 @@ namespace IXAT
                 {
                     if (dbConnection.koppelTaxiAanvraag(cbTaxiAanvragen.SelectedValue.ToString(), cbChauffeurNaam.SelectedValue.ToString()))
                     {
-                        MessageBox.Show("Succesvol gekoppeld");
-
                         updateTaxiAanvragen();
                         updateVrijeChauffeurs();
+
+                        MessageBox.Show("De taxi aanvraag is succesvol gekoppeld aan de chauffeur", "Succesvol gekoppeld", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-
+                        MessageBox.Show("Kon de taxi aanvraag niet koppelen aan de chauffeur", "Koppel fout", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
+            }
+        }
+
+        private void cbChauffeurNaam_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbChauffeurNaam.SelectedIndex != 0 && cbChauffeurNaam.SelectedValue != null && locationCurrentKlant != null)
+            {
+                double.TryParse(dataTableChauffeurs.Rows[cbChauffeurNaam.SelectedIndex]["latitude"].ToString(), out double latitude1);
+                double.TryParse(dataTableChauffeurs.Rows[cbChauffeurNaam.SelectedIndex]["longitude"].ToString(), out double longitude1);
+
+                bingMaps.Center = dbConnection.middleOfLocations(new Location(latitude1, longitude1), locationCurrentKlant);
+                bingMaps.ZoomLevel = 13;
             }
         }
     }
