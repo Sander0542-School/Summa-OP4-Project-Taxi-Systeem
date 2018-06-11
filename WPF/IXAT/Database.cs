@@ -252,8 +252,7 @@ namespace IXAT
             connection.Open();
 
             MySqlCommand sqlCommand = connection.CreateCommand();
-            //TODO: DEZE QUERY WERKT NIET!!!
-            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, klant.naam, klant.email, klant.mobiel, taxi_aanvraag.latitude, taxi_aanvraag.longitude, chauffeurKlant.naam as chauffeurNaam, chauffeurKlant.id as chauffeurID, chauffeur.latitude as latitudeChauffeur, chauffeur.longitude as longitudeChauffeur FROM taxi_aanvraag LEFT JOIN klant ON klant.id = taxi_aanvraag.klantID LEFT JOIN klant as chauffeurKlant ON taxi_aanvraag.chauffeurID = klant.id LEFT JOIN chauffeur ON chauffeurKlant.chauffeurID = chauffeur.id WHERE aanvraagID = @id AND klaar = '0';";
+            sqlCommand.CommandText = "SELECT minimale_laadruimte, passagiers, TIME(datum_tijd) as tijd, CONCAT(DAY(datum_tijd),'-',MONTH(datum_tijd),'-',YEAR(datum_tijd)) as datum, klant.naam, klant.email, klant.mobiel, taxi_aanvraag.latitude, taxi_aanvraag.longitude, chauffeurKlant.naam as chauffeurNaam, chauffeurKlant.id as chauffeurID, chauffeur.latitude as latitudeChauffeur, chauffeur.longitude as longitudeChauffeur FROM taxi_aanvraag LEFT JOIN klant ON klant.id = taxi_aanvraag.klantID LEFT JOIN chauffeur ON taxi_aanvraag.chauffeurID = chauffeur.id LEFT JOIN klant AS chauffeurKlant ON chauffeurKlant.id = klant.chauffeurID WHERE aanvraagID = @id AND klaar = '0';";
             sqlCommand.Parameters.AddWithValue("@id", sAanvraagID);
             MySqlDataReader dataReader = sqlCommand.ExecuteReader();
 

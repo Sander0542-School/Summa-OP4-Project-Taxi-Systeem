@@ -116,7 +116,7 @@ namespace IXAT
                 addPointOnMap(pushpinChauffeur, latitudeChauffeur, longitudeChauffeur, Brushes.Blue, datatable.Rows[0]["naam"].ToString());
 
                 bingMaps.Center = dbConnection.middleOfLocations(new Location(latitude, longitude), new Location(latitudeChauffeur, longitudeChauffeur));
-                bingMaps.ZoomLevel = 15;
+                bingMaps.ZoomLevel = 13;
             }
             else
             {
